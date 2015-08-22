@@ -1,9 +1,13 @@
 # OpenARLog
 Open source Amateur Radio logging Application for Windows
 
-Currently in the design process. I will try to update frequently during the summer with hopefully an alpha release by the third week of August when I start school again.
+This is still very early in development. The UI is completely unusable right now. Just the design
+has been implemented, no functionality yet. Most work has been done on the database.
 
-Please refer to the wiki for more details. <https://github.com/kcotugno/OpenARLog/wiki>
+#Building
+Just open the solution in Visual Studio, build and run.
+
+
 
 Kevin
 
