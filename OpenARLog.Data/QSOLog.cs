@@ -60,8 +60,8 @@ namespace OpenARLog.Data
             _qsoLogConnection.Open();
 
             if (IsDatabase() == false)
-                 ResetDbFile();
-                
+                ResetDbFile();
+
         }
 
         public void CloseLog()
@@ -76,7 +76,7 @@ namespace OpenARLog.Data
 
             bool hasTable;
 
-           
+
             try
             {
                 data = sqliteCmd.ExecuteReader();
@@ -151,7 +151,7 @@ namespace OpenARLog.Data
                     Mode = data.IsDBNull(Constants.INDEX_MODE) ? null : data.GetString(Constants.INDEX_MODE),
                     TimeOn = data.IsDBNull(Constants.INDEX_TIMEON) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_TIMEON),
                     TimeOff = data.IsDBNull(Constants.INDEX_TIMEOFF) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_TIMEOFF)
-                    
+
                 });
             }
 
@@ -161,7 +161,7 @@ namespace OpenARLog.Data
 
         #endregion
 
-        #region Query Functions TODO
+        #region Query Functions
 
         public DataTable GetAllQSOsAsDataTable()
         {
@@ -196,20 +196,55 @@ namespace OpenARLog.Data
                 sqliteCmd.Dispose();
             }
 
-
             return qso[0];
         }
 
         public List<QSO> GetQSOByCallsign(string callsign)
         {
-            // TODO
-            return null;
+            List<QSO> qso = new List<QSO>();
+
+            string sql = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
+
+            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
+            {
+                sqliteCmd.Parameters.AddWithValue("@callsign", callsign);
+
+
+                SQLiteDataReader data = sqliteCmd.ExecuteReader();
+
+                qso = GetQSOsFromDataReader(data);
+
+                data.Close();
+                data.Dispose();
+
+                sqliteCmd.Dispose();
+            }
+
+            return qso;
         }
 
         public List<QSO> GetQSOByName(string name)
         {
-            // TODO
-            return null;
+            List<QSO> qso = new List<QSO>();
+
+            string sql = "SELECT * FROM QSOs WHERE NAME = @name";
+
+            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
+            {
+                sqliteCmd.Parameters.AddWithValue("@name", name);
+
+
+                SQLiteDataReader data = sqliteCmd.ExecuteReader();
+
+                qso = GetQSOsFromDataReader(data);
+
+                data.Close();
+                data.Dispose();
+
+                sqliteCmd.Dispose();
+            }
+
+            return qso;
         }
 
         #endregion
