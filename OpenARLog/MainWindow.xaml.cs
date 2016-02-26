@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using OpenARLog.Data;
 
 namespace OpenARLog
 {
@@ -31,9 +32,23 @@ namespace OpenARLog
     /// </summary>
     public partial class MainWindow : Window
     {
+        QSOLog _qsoLog;
+        List<QSO> _qsos;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _qsoLog = new QSOLog();
+            _qsoLog.OpenLog(Properties.Settings.Default.LogPath);
+
+            _qsos = new List<QSO>();
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            _qsoLog.CloseLog();
+            _qsoLog.Dispose();
         }
         
         #region Menu Click Handlers
@@ -72,7 +87,23 @@ namespace OpenARLog
 
         private void logBtnClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            QSO contact = new QSO()
+            {
+                Callsign = CallsignTxt.Text,
+                Name = NameTxt.Text,
+                Country = CountryTxt.Text,
+                State = StateTxt.Text,
+                County = CountyTxt.Text,
+                City = CityTxt.Text,
+                GridSquare = GridSquareTxt.Text,
+                Band = BandTxt.Text,
+                Mode = ModeTxt.Text,
+                Frequency = FrequencyTxt.Text,
+                //TimeOn = TimeOffTxt.Text,
+                //TimeOff = TimeOffTxt.Text
+            };
+
+            _qsoLog.InsertQSO(contact);
         }
 
         private void resetBtnBlick(object sender, RoutedEventArgs e)
@@ -80,9 +111,22 @@ namespace OpenARLog
             showTODOMessage();
         }
 
+        private void CallsignTxtChanged(object sender, RoutedEventArgs e)
+        {
+            if (CallsignTxt.Text == string.Empty)
+                LogBtn.IsEnabled = false;
+            else
+                LogBtn.IsEnabled = true;
+        }
+
+        #region User Messages
+
         private void showTODOMessage()
         {
             MessageBox.Show("TODO", "DEBUG", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        #endregion
+
     }
 }

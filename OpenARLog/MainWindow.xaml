@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:OpenARLog"
         x:Class="OpenARLog.MainWindow"
-        Title="OpenARLog" Height="768" Width="1024" MinWidth="800" MinHeight="600" >
+        Title="OpenARLog" Height="768" Width="1024" MinWidth="800" MinHeight="600" Closed="WindowClosed" >
     <Grid Margin="0,0,0,0" >
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -39,42 +39,42 @@
                 <GroupBox Header="Contact Info" VerticalAlignment="Top" Margin="0,0,10,0">
                     <StackPanel>
                         <Label Content="Callsign"/>
-                        <TextBox TextWrapping="Wrap" TabIndex="0" CharacterCasing="Upper" />
+                        <TextBox Name="CallsignTxt" TextWrapping="Wrap" TabIndex="0" CharacterCasing="Upper" TextChanged="CallsignTxtChanged" />
                         <Label Content="Name"/>
-                        <TextBox TextWrapping="Wrap" TabIndex="1"/>
+                        <TextBox Name="NameTxt" TextWrapping="Wrap" TabIndex="1"/>
                         <Label Content="Country"/>
-                        <ComboBox IsEditable="True" TabIndex="2"/>
+                        <ComboBox Name="CountryTxt" IsEditable="True" TabIndex="2"/>
                         <Label Content="State"/>
-                        <ComboBox IsEditable="True" TabIndex="3"/>
+                        <ComboBox Name="StateTxt" IsEditable="True" TabIndex="3"/>
                         <Label Content="County"/>
-                        <ComboBox IsEditable="True" TabIndex="4"/>
+                        <ComboBox Name="CountyTxt" IsEditable="True" TabIndex="4"/>
                         <Label Content="City"/>
-                        <TextBox TextWrapping="Wrap" TabIndex="5"/>
+                        <TextBox Name="CityTxt" TextWrapping="Wrap" TabIndex="5"/>
                         <Label Content="Grid Square" />
-                        <TextBox TextWrapping="Wrap" TabIndex="6" CharacterCasing="Upper" />
+                        <TextBox Name="GridSquareTxt" TextWrapping="Wrap" TabIndex="6" CharacterCasing="Upper" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Radio Info" Margin="10,0" VerticalAlignment="Top" Grid.Column="1" >
                     <StackPanel>
                         <Label Content="Band" />
-                        <ComboBox IsEditable="True" TabIndex="7" />
+                        <ComboBox Name="BandTxt" IsEditable="True" TabIndex="7" />
                         <Label Content="Frequency" />
-                        <TextBox TextWrapping="Wrap" TabIndex="8" />
+                        <TextBox Name="FrequencyTxt" TextWrapping="Wrap" TabIndex="8" />
                         <Label Content="Mode" />
-                        <ComboBox IsEditable="True" TabIndex="9" />
+                        <ComboBox Name="ModeTxt" IsEditable="True" TabIndex="9" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Time Info" Grid.Column="1" Margin="10,172,10,0" VerticalAlignment="Top">
                     <StackPanel>
                         <Label Content="Time On" />
-                        <TextBox TextWrapping="Wrap" TabIndex="10" />
+                        <TextBox Name="TimeOnTxt" TextWrapping="Wrap" TabIndex="10" />
                         <Label Content="Time Off" />
-                        <TextBox TextWrapping="Wrap" TabIndex="11" />
+                        <TextBox Name="TimeOffTxt" TextWrapping="Wrap" TabIndex="11" />
                     </StackPanel>
                 </GroupBox>
             </Grid>
         </ScrollViewer>
-        <Button Content="Log" Grid.Column="1" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="logBtnClick"/>
+        <Button Name="LogBtn" Content="Log" Grid.Column="1" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="logBtnClick"/>
         <Button Content="Reset" Grid.Column="1" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="resetBtnBlick"/>
 
 
