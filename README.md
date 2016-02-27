@@ -6,6 +6,7 @@ has been implemented, no functionality yet. Most work has been done on the datab
 
 #Dependencies
 EntityFramework
+
 System.Data.SQLite
 
 Get both from VS NuGet Package Manager.
