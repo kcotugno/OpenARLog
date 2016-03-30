@@ -32,6 +32,20 @@ namespace OpenARLog.Data
 
         public QSO()
         {
+            Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("ID: {0}, Callsign: {1}, Name: {2}, Country: {3}, State: {4}, " +
+                                "County: {5}, City: {6}, Grid Square: {7}, Frequency: {8}, " +
+                                "Band: {9}, Mode: {10}, Time On: {11}, Time Off: {12}", ID,
+                                Callsign, Name, Country, State, Country, City, GridSquare,
+                                Frequency, Band, Mode, TimeOn.ToString(), TimeOff.ToString());
+        }
+
+        public void Clear()
+        {
             ID = 0;
             Callsign = string.Empty;
             Name = string.Empty;
@@ -48,15 +62,6 @@ namespace OpenARLog.Data
 
             TimeOn = null;
             TimeOff = null;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("ID: {0}, Callsign: {1}, Name: {2}, Country: {3}, State: {4}, " +
-                                "County: {5}, City: {6}, Grid Square: {7}, Frequency: {8}, " +
-                                "Band: {9}, Mode: {10}, Time On: {11}, Time Off: {12}", ID,
-                                Callsign, Name, Country, State, Country, City, GridSquare,
-                                Frequency, Band, Mode, TimeOn.ToString(), TimeOff.ToString());
         }
     }
 }
