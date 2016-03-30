@@ -154,36 +154,36 @@ namespace OpenARLog.ADIF
             // TODO Remove the null check. After the QSO class is updated to initialize its string properties to empty we will not have to do the double check.
 
             // Operator info.
-            if (!(qso.Callsign == string.Empty || qso.Callsign == null))
+            if (!(qso.Callsign == string.Empty))
                 _streamer.WriteLine(string.Format("<CALL:{0}>{1}", qso.Callsign.Length, qso.Callsign));
 
-            if (!(qso.Name == string.Empty || qso.Name == null))
+            if (!(qso.Name == string.Empty))
                 _streamer.WriteLine(string.Format("<NAME:{0}>{1}", qso.Name.Length, qso.Name));
 
             // Location info.
-            if (!(qso.Country == string.Empty || qso.Country == null))
+            if (!(qso.Country == string.Empty))
                 _streamer.WriteLine(string.Format("<COUNTRY:{0}>{1}", qso.Country.Length, qso.Country));
 
-            if (!(qso.State == string.Empty || qso.State == null))
+            if (!(qso.State == string.Empty))
                 _streamer.WriteLine(string.Format("<STATE:{0}>{1}", qso.State.Length, qso.State));
 
-            if (!(qso.County == string.Empty || qso.County == null))
+            if (!(qso.County == string.Empty))
                 _streamer.WriteLine(string.Format("<CNTY:{0}>{1}", qso.County.Length, qso.County));
 
-            if (!(qso.City == string.Empty || qso.City == null))
+            if (!(qso.City == string.Empty))
                 _streamer.WriteLine(string.Format("<QTH:{0}>{1}", qso.City.Length, qso.City));
 
-            if (!(qso.GridSquare == string.Empty || qso.GridSquare == null))
+            if (!(qso.GridSquare == string.Empty))
                 _streamer.WriteLine(string.Format("<GRIDSQUARE:{0}>{1}", qso.GridSquare.Length, qso.GridSquare));
 
             // Operation info.
-            if (!(qso.Frequency == string.Empty || qso.Frequency == null))
+            if (!(qso.Frequency == string.Empty))
                 _streamer.WriteLine(string.Format("<FREQ:{0}>{1}", qso.Frequency.Length, qso.Frequency));
 
-            if (!(qso.Band == string.Empty || qso.Band == null))
+            if (!(qso.Band == string.Empty))
                 _streamer.WriteLine(string.Format("<BAND:{0}>{1}", qso.Band.Length, qso.Band));
 
-            if (!(qso.Mode == string.Empty || qso.Mode == null))
+            if (!(qso.Mode == string.Empty))
                 _streamer.WriteLine(string.Format("<MODE:{0}>{1}", qso.Mode.Length, qso.Mode));
 
             // TODO Add the rest of the fields.
