@@ -30,6 +30,26 @@ namespace OpenARLog.Data
         public DateTime? TimeOn { get; set; }
         public DateTime? TimeOff { get; set; }
 
+        public QSO()
+        {
+            ID = 0;
+            Callsign = string.Empty;
+            Name = string.Empty;
+
+            Country = string.Empty;
+            State = string.Empty;
+            County = string.Empty;
+            City = string.Empty;
+            GridSquare = string.Empty;
+
+            Frequency = string.Empty;
+            Band = string.Empty;
+            Mode = string.Empty;
+
+            TimeOn = null;
+            TimeOff = null;
+        }
+
         public override string ToString()
         {
             return string.Format("ID: {0}, Callsign: {1}, Name: {2}, Country: {3}, State: {4}, " +
