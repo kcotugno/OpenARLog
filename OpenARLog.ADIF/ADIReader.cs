@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using OpenARLog.Data;
+
 
 namespace OpenARLog.ADIF
 {
@@ -82,18 +84,22 @@ namespace OpenARLog.ADIF
             _streamer.Close();           
         }
 
-        public void Read()
+        public List<QSO> Read()
         {
+            List<QSO> contacts;
 
             if (!_streamer.EndOfStream)
             {
                 ParseHeader();
                 ParseRecords();
+
+                contacts = GetQSOsFromRecords();
             }
 
             //_headerFields.ForEach(x => Console.WriteLine(x._header.name + ":" + x._header.length + ":" + x._header.type + ":" + x._data));
             //_qsoFields.ForEach(x => Console.WriteLine(x._header.name + ":" + x._header.length + ":" + x._header.type + ":" + x._data));
 
+            return null;
         }
 
         #endregion
@@ -281,6 +287,73 @@ namespace OpenARLog.ADIF
             data = line.Substring((line.IndexOf(">") + 1), header.length);
 
             return data;
+        }
+
+        private List<QSO> GetQSOsFromRecords()
+        {
+            List<QSO> qsos = new List<QSO>();
+            QSO temp = new QSO();
+
+
+            foreach (_Field x in _qsoFields)
+            {
+                if (x._header.name == "EOR")
+                {
+                    qsos.Add(temp);
+                    temp = new QSO();
+                }
+                else
+                {
+                    switch (x._header.name)
+                    {
+
+                        case "NAME":
+                            temp.Name = x._data;
+                            break;
+
+                        case "CALL":
+                            temp.Callsign = x._data;
+                            break;
+
+                        case "COUNTRY":
+                            temp.Country = x._data;
+                            break;
+
+                        case "STATE":
+                            temp.State = x._data;
+                            break;
+
+                        case "CNTY":
+                            temp.County= x._data;
+                            break;
+
+                        case "QTH":
+                            temp.City = x._data;
+                            break;
+
+                        case "GRIDSQUARE":
+                            temp.GridSquare = x._data;
+                            break;
+
+                        case "FREQ":
+                            temp.Frequency = x._data;
+                            break;
+
+                        case "BAND":
+                            temp.Band= x._data;
+                            break;
+
+                        case "MODE":
+                            temp.Mode = x._data;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            return qsos;
         }
 
         #endregion
