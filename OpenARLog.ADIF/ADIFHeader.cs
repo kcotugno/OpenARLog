@@ -18,11 +18,6 @@ namespace OpenARLog.ADIF
             get; set;
         } 
 
-        public DateTime TimeStamp
-        {
-            get; set;
-        }
-
         public string ProgramId
         {
             get; set;
@@ -31,6 +26,26 @@ namespace OpenARLog.ADIF
         public string ProgramVersion
         {
             get; set;
+        }
+
+        public DateTime? TimeStamp
+        {
+            get; set;
+        }
+
+        public string InitialComment
+        {
+            get;
+            set;
+        }
+
+        public ADIFHeader()
+        {
+            Version = string.Empty;
+            ProgramId = string.Empty;
+            ProgramVersion = string.Empty;
+            TimeStamp = null;
+            InitialComment = string.Empty;
         }
     }
 }
