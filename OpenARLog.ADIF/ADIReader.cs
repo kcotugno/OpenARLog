@@ -202,7 +202,7 @@ namespace OpenARLog.ADIF
 
                 // This is a pretty inefficient way of finding the EOH. Fix later.
                 // TODO Make more efficient.
-                return _headerFields.Exists(x => x._header.name.ToUpper() == "EOH");
+                return _headerFields.Exists(x => x._header.name == "EOH");
 
             }
 
@@ -249,11 +249,11 @@ namespace OpenARLog.ADIF
             // The data name is simple and always in a header.
             if (first != -1)
             {
-                results.name = header.Substring((open + 1), (first - open) - 1);
+                results.name = header.Substring((open + 1), (first - open) - 1).ToUpper();
             }
             else
             {
-                results.name = header.Substring((open + 1), (close - open) - 1);
+                results.name = header.Substring((open + 1), (close - open) - 1).ToUpper();
                 return results;
             }
 
