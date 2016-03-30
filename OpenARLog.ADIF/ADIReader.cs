@@ -37,7 +37,7 @@ namespace OpenARLog.ADIF
             public string _data;
         }
 
-        // A struct told hold an entry header to be passed to the data parser
+        // A struct told hold an entry header to be passed to the data parser.
         private struct _FieldHeader
         {
             public string name;
@@ -73,7 +73,7 @@ namespace OpenARLog.ADIF
             }
             catch
             {
-
+                // TODO
             }
         }
 
