@@ -1,8 +1,17 @@
 # OpenARLog
 Open source Amateur Radio logging Application for Windows
 
-This is still very early in development. The UI is completely unusable right now. Just the design
-has been implemented, no functionality yet. Most work has been done on the database.
+OpenARLog: This project contains the front-end code, including the UI. So far, only a basic
+non-functional interface has been implemented.
+
+OpenARLog.ADIF: This project contains the library for importing and exporting from the ADIF file
+format.
+
+OpenARLog.Data: This project contains the library for handling the data internally and interfacing
+with the SQLite database.
+
+These are still in their early development. The UI is unusable, Data is only partially developed.
+Work will be focused on finishing the back end before the UI will be completed.
 
 #Dependencies
 EntityFramework
