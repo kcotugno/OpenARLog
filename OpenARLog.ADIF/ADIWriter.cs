@@ -186,6 +186,12 @@ namespace OpenARLog.ADIF
             if (!(qso.Mode == string.Empty))
                 _streamer.WriteLine(string.Format("<MODE:{0}>{1}", qso.Mode.Length, qso.Mode));
 
+            if (!(qso.TimeOn == null))
+                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.TimeOn.Value.ToUniversalTime().ToString("HHmmss")));
+
+            if (!(qso.TimeOff == null))
+                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.TimeOff.Value.ToUniversalTime().ToString("HHmmss")));
+
             // TODO Add the rest of the fields.
 
             _streamer.WriteLine("<EOR>");

@@ -324,7 +324,7 @@ namespace OpenARLog.ADIF
                             break;
 
                         case "CNTY":
-                            temp.County= x._data;
+                            temp.County = x._data;
                             break;
 
                         case "QTH":
@@ -340,11 +340,19 @@ namespace OpenARLog.ADIF
                             break;
 
                         case "BAND":
-                            temp.Band= x._data;
+                            temp.Band = x._data;
                             break;
 
                         case "MODE":
                             temp.Mode = x._data;
+                            break;
+
+                        case "TIME_ON":
+                            temp.TimeOn = GetTimeFromRecord(x);
+                            break;
+
+                        case "TIME_OFF":
+                            temp.TimeOff = GetTimeFromRecord(x);
                             break;
 
                         default:
@@ -354,6 +362,26 @@ namespace OpenARLog.ADIF
             }
 
             return qsos;
+        }
+
+
+        // The ADIF file format stores its times in UTC. We will leave any conversion to the parent program.
+        DateTime GetTimeFromRecord(_Field record)
+        {
+            string temp = string.Empty;
+
+            int hours = 0;
+            int minutes = 0;
+            int seconds = 0;
+
+            hours = Convert.ToInt32(record._data.Substring(0, 2));
+            minutes = Convert.ToInt32(record._data.Substring(2, 2));
+
+            if (record._data.Length == 6)
+                seconds = Convert.ToInt32(record._data.Substring(4, 2));
+
+            // The time and date are stored separately. So we will set the date here to 1/1/2000 
+            return new DateTime(2000, 1, 1, hours, minutes, seconds, DateTimeKind.Utc);
         }
 
         #endregion
