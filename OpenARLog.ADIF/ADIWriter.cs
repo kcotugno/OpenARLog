@@ -190,7 +190,7 @@ namespace OpenARLog.ADIF
                 _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.TimeOn.Value.ToUniversalTime().ToString("HHmmss")));
 
             if (!(qso.TimeOff == null))
-                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.TimeOff.Value.ToUniversalTime().ToString("HHmmss")));
+                _streamer.WriteLine(string.Format("<TIME_OFF:6>{0}", qso.TimeOff.Value.ToUniversalTime().ToString("HHmmss")));
 
             // TODO Add the rest of the fields.
 
