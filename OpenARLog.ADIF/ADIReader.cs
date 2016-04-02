@@ -366,8 +366,11 @@ namespace OpenARLog.ADIF
 
 
         // The ADIF file format stores its times in UTC. We will leave any conversion to the parent program.
-        DateTime GetTimeFromRecord(_Field record)
+        DateTime? GetTimeFromRecord(_Field record)
         {
+            if (record._header.length != 6 || record._header.length != 4)
+                return null;
+
             string temp = string.Empty;
 
             int hours = 0;
