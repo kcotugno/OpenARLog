@@ -348,11 +348,19 @@ namespace OpenARLog.ADIF
                             break;
 
                         case "TIME_ON":
-                            temp.TimeOn = GetTimeFromRecord(x);
+                            temp.DateTimeOn = MergeDateAndTime(temp.DateTimeOn, GetTimeFromRecord(x));
+                            break;
+
+                        case "QSO_DATE":
+                            temp.DateTimeOn = MergeDateAndTime(temp.DateTimeOn, GetDateFromRecord(x));
                             break;
 
                         case "TIME_OFF":
-                            temp.TimeOff = GetTimeFromRecord(x);
+                            temp.DateTimeOff = MergeDateAndTime(temp.DateTimeOff, GetTimeFromRecord(x));
+                            break;
+
+                        case "QSO_DATE_OFF":
+                            temp.DateTimeOff = MergeDateAndTime(temp.DateTimeOff, GetDateFromRecord(x));
                             break;
 
                         default:
@@ -362,6 +370,45 @@ namespace OpenARLog.ADIF
             }
 
             return qsos;
+        }
+
+        // The date and time get stored in different filed in file.We need to merge these so TimeOn/TimeOff store both.
+        private DateTime? MergeDateAndTime(DateTime? current, DateTime? toMerge)
+        {
+            if (current == null)
+                return toMerge;
+
+            int year = 0;
+            int month = 0;
+            int day = 0;
+
+            int hours = 0;
+            int minutes = 0;
+            int seconds = 0;
+            
+            if (current.Value.ToString("yyyyMMdd") == "15000101")
+            {
+                year = Convert.ToInt32(toMerge.Value.ToString("yyyy"));
+                month = Convert.ToInt32(toMerge.Value.ToString("%M"));
+                day = Convert.ToInt32(toMerge.Value.ToString("%d"));
+
+                hours = Convert.ToInt32(current.Value.ToString("%H"));
+                minutes = Convert.ToInt32(current.Value.ToString("%m"));
+                seconds = Convert.ToInt32(current.Value.ToString("%s"));
+
+                return new DateTime(year, month, day, hours, minutes, seconds, DateTimeKind.Utc);
+            }  else
+            {
+                year = Convert.ToInt32(current.Value.ToString("yyyy"));
+                month = Convert.ToInt32(current.Value.ToString("%M"));
+                day = Convert.ToInt32(current.Value.ToString("%d"));
+
+                hours = Convert.ToInt32(toMerge.Value.ToString("%H"));
+                minutes = Convert.ToInt32(toMerge.Value.ToString("%m"));
+                seconds = Convert.ToInt32(toMerge.Value.ToString("%s"));
+
+                return new DateTime(year, month, day, hours, minutes, seconds, DateTimeKind.Utc);
+            }
         }
 
         // The ADIF file format stores its times in UTC. We will leave any conversion to the parent program.
@@ -383,7 +430,26 @@ namespace OpenARLog.ADIF
                 seconds = Convert.ToInt32(record._data.Substring(4, 2));
 
             // The time and date are stored separately. So we will set the date here to 1/1/1500.
+            // This date is such so we can know if the date needs to be updated when merging the
+            // date and time. 
             return new DateTime(1500, 1, 1, hours, minutes, seconds, DateTimeKind.Utc);
+        }
+
+        // The ADIF file format stores its date with respect to the UTC time.
+        private DateTime? GetDateFromRecord(_Field record)
+        {
+            if (record._header.length != 8)
+                return null;
+
+            int year = 0;
+            int month = 0;
+            int day = 0;
+
+            year = Convert.ToInt32(record._data.Substring(0, 4));
+            month = Convert.ToInt32(record._data.Substring(4, 2));
+            day = Convert.ToInt32(record._data.Substring(6, 2));
+
+            return new DateTime(year, month, day);
         }
 
         #endregion

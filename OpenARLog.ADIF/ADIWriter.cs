@@ -186,11 +186,17 @@ namespace OpenARLog.ADIF
             if (!(qso.Mode == string.Empty))
                 _streamer.WriteLine(string.Format("<MODE:{0}>{1}", qso.Mode.Length, qso.Mode));
 
-            if (!(qso.TimeOn == null))
-                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.TimeOn.Value.ToUniversalTime().ToString("HHmmss")));
+            if (!(qso.DateTimeOn == null))
+            {
+                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.DateTimeOn.Value.ToUniversalTime().ToString("HHmmss")));
+                _streamer.WriteLine(string.Format("<QSO_DATE:8>{0}", qso.DateTimeOn.Value.ToUniversalTime().ToString("yyyyMMdd")));
+            }
 
-            if (!(qso.TimeOff == null))
-                _streamer.WriteLine(string.Format("<TIME_OFF:6>{0}", qso.TimeOff.Value.ToUniversalTime().ToString("HHmmss")));
+            if (!(qso.DateTimeOff == null))
+            {
+                _streamer.WriteLine(string.Format("<TIME_OFF:6>{0}", qso.DateTimeOff.Value.ToUniversalTime().ToString("HHmmss")));
+                _streamer.WriteLine(string.Format("<QSO_DATE_OFF:8>{0}", qso.DateTimeOff.Value.ToUniversalTime().ToString("yyyyMMdd")));
+            }
 
             // TODO Add the rest of the fields.
 

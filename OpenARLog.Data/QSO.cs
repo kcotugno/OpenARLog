@@ -27,8 +27,9 @@ namespace OpenARLog.Data
         public string Band { get; set; }
         public string Mode { get; set; }
 
-        public DateTime? TimeOn { get; set; }
-        public DateTime? TimeOff { get; set; }
+        // These two members will hold the Equivalent TIME_ON/QSO_DATE and TIME_OFF/QSO_DATE_OFF
+        public DateTime? DateTimeOn { get; set; }
+        public DateTime? DateTimeOff { get; set; }
 
         public QSO()
         {
@@ -41,7 +42,7 @@ namespace OpenARLog.Data
                                 "County: {5}, City: {6}, Grid Square: {7}, Frequency: {8}, " +
                                 "Band: {9}, Mode: {10}, Time On: {11}, Time Off: {12}", ID,
                                 Callsign, Name, Country, State, Country, City, GridSquare,
-                                Frequency, Band, Mode, TimeOn.ToString(), TimeOff.ToString());
+                                Frequency, Band, Mode, DateTimeOn.ToString(), DateTimeOff.ToString());
         }
 
         public void Clear()
@@ -60,8 +61,8 @@ namespace OpenARLog.Data
             Band = string.Empty;
             Mode = string.Empty;
 
-            TimeOn = null;
-            TimeOff = null;
+            DateTimeOn = null;
+            DateTimeOff = null;
         }
     }
 }
