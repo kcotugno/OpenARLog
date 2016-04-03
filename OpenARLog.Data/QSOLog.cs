@@ -253,10 +253,7 @@ namespace OpenARLog.Data
 
         public void InsertQSO(QSO qso)
         {
-            string sql = "INSERT INTO QSOs (CALLSIGN, NAME, COUNTRY, STATE, COUNTY, CITY, " +
-                        "GRIDSQUARE, FREQUENCY, BAND, MODE, DATETIMEON, DATETIMEOFF) VALUES (@callsign, " +
-                        "@name, @country, @state, @county, @city, @grid, @freq, @band, @mode, " +
-                        "@datetimeon, @datetimeoff)";
+            string sql = Constants.LOG_DB_INSERT_QSO;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
