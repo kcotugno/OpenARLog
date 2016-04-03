@@ -382,8 +382,8 @@ namespace OpenARLog.ADIF
             if (record._data.Length == 6)
                 seconds = Convert.ToInt32(record._data.Substring(4, 2));
 
-            // The time and date are stored separately. So we will set the date here to 1/1/2000 
-            return new DateTime(2000, 1, 1, hours, minutes, seconds, DateTimeKind.Utc);
+            // The time and date are stored separately. So we will set the date here to 1/1/1500.
+            return new DateTime(1500, 1, 1, hours, minutes, seconds, DateTimeKind.Utc);
         }
 
         #endregion
