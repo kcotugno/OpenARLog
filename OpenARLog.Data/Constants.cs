@@ -22,14 +22,14 @@ namespace OpenARLog.Data
         public static int INDEX_FREQUENCY = 8;
         public static int INDEX_BAND = 9;
         public static int INDEX_MODE = 10;
-        public static int INDEX_TIMEON = 11;
-        public static int INDEX_TIMEOFF = 12;
+        public static int INDEX_DATETIMEON = 11;
+        public static int INDEX_DATETIMEOFF = 12;
 
         public static string LOG_DB_CREATE_QSO_TABLE = "CREATE TABLE IF NOT EXISTS QSOs " +
                                                         "(ID INTEGER PRIMARY KEY NOT NULL, CALLSIGN TEXT NOT NULL, " +
                                                         "NAME TEXT, COUNTRY TEXT, STATE TEXT, COUNTY TEXT, " +
                                                         "CITY TEXT, GRIDSQUARE TEXT, FREQUENCY TEXT, BAND TEXT, " +
-                                                        "MODE TEXT, TIMEON DATETIME, TIMEOFF DATETIME)";
+                                                        "MODE TEXT, DATETIMEON DATETIME, DATETIMEOFF DATETIME)";
 
         public static string LOG_DB_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='QSOs'";
     }

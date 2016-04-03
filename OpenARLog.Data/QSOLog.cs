@@ -149,13 +149,13 @@ namespace OpenARLog.Data
                     Frequency = data.IsDBNull(Constants.INDEX_FREQUENCY) ? null : data.GetString(Constants.INDEX_FREQUENCY),
                     Band = data.IsDBNull(Constants.INDEX_BAND) ? null : data.GetString(Constants.INDEX_BAND),
                     Mode = data.IsDBNull(Constants.INDEX_MODE) ? null : data.GetString(Constants.INDEX_MODE),
-                    TimeOn = data.IsDBNull(Constants.INDEX_TIMEON) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_TIMEON),
-                    TimeOff = data.IsDBNull(Constants.INDEX_TIMEOFF) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_TIMEOFF)
+                    DateTimeOn = data.IsDBNull(Constants.INDEX_DATETIMEON) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_DATETIMEON),
+                    DateTimeOff = data.IsDBNull(Constants.INDEX_DATETIMEOFF) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_DATETIMEOFF)
 
                 });
             }
 
-            qso[0].TimeOn = DateTime.Now;
+            qso[0].DateTimeOn = DateTime.Now;
             return qso;
         }
 
@@ -254,9 +254,9 @@ namespace OpenARLog.Data
         public void InsertQSO(QSO qso)
         {
             string sql = "INSERT INTO QSOs (CALLSIGN, NAME, COUNTRY, STATE, COUNTY, CITY, " +
-                        "GRIDSQUARE, FREQUENCY, BAND, MODE, TIMEON, TIMEOFF) VALUES (@callsign, " +
+                        "GRIDSQUARE, FREQUENCY, BAND, MODE, DATETIMEON, DATETIMEOFF) VALUES (@callsign, " +
                         "@name, @country, @state, @county, @city, @grid, @freq, @band, @mode, " +
-                        "@timeon, @timeoff)";
+                        "@datetimeon, @datetimeoff)";
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -270,8 +270,8 @@ namespace OpenARLog.Data
                 sqliteCmd.Parameters.AddWithValue("@freq", qso.Frequency);
                 sqliteCmd.Parameters.AddWithValue("@band", qso.Band);
                 sqliteCmd.Parameters.AddWithValue("@mode", qso.Mode);
-                sqliteCmd.Parameters.AddWithValue("@timeon", DateTimeToSQLite(qso.TimeOn));
-                sqliteCmd.Parameters.AddWithValue("@timeoff", DateTimeToSQLite(qso.TimeOff));
+                sqliteCmd.Parameters.AddWithValue("@datetimeon", DateTimeToSQLite(qso.DateTimeOn));
+                sqliteCmd.Parameters.AddWithValue("@datetimeoff", DateTimeToSQLite(qso.DateTimeOff));
 
 
                 sqliteCmd.ExecuteNonQuery();
