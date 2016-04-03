@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("OpenARLog.Data")]
 [assembly: AssemblyDescription("OpenARLog Data Management")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Octavian Software")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenARLog.Data")]
 [assembly: AssemblyCopyright("Copyright © 2015 kcotugno")]
 [assembly: AssemblyTrademark("")]

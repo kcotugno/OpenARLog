@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("OpenARLog")]
 [assembly: AssemblyDescription("Open source Amateur Radio logging Application for Windows")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Octavian Software")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenARLog")]
 [assembly: AssemblyCopyright("Copyright © 2015 kcotugno")]
 [assembly: AssemblyTrademark("")]
