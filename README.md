@@ -23,6 +23,13 @@ Get both from VS NuGet Package Manager.
 #Building
 Just open the solution in Visual Studio, build and run.
 
+---
+
+#Branches
+
+* master - Main development branch.
+* ui-dev - UI development branch.
+
 
 
 Kevin
