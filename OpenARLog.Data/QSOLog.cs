@@ -73,7 +73,7 @@ namespace OpenARLog.Data
 
         private bool IsDatabase()
         {
-            SQLiteCommand sqliteCmd = new SQLiteCommand("SELECT * FROM QSOs", _qsoLogConnection);
+            SQLiteCommand sqliteCmd = new SQLiteCommand(Constants.LOG_DB_QUERY_GENERAL, _qsoLogConnection);
             SQLiteDataReader data;
 
             bool hasTable;

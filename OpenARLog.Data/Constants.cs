@@ -45,7 +45,9 @@ namespace OpenARLog.Data
                                                  "(@callsign, @name, @country, @state, @county, @city, @grid, @freq, " +
                                                  "@band, @mode, @datetimeon, @datetimeoff)";
 
-        // Query String
+        // Query commands
+        public static string LOG_DB_QUERY_GENERAL = "SELECT * FROM QSOs";
+
         public static string LOG_DB_QUERY_ID = "SELECT * FROM QSOs WHERE ID = @id";
 
         public static string LOG_DB_QUERY_CALLSIGN = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
