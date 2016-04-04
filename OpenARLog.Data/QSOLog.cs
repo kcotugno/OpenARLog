@@ -181,7 +181,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE ID = @id";
+            string sql = Constants.LOG_DB_QUERY_ID;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -205,7 +205,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
+            string sql = Constants.LOG_DB_QUERY_CALLSIGN;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -229,7 +229,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE NAME = @name";
+            string sql = Constants.LOG_DB_QUERY_NAME;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
