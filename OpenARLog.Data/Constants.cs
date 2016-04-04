@@ -27,7 +27,15 @@ namespace OpenARLog.Data
             BAND,
             MODE,
             DATETIMEON,
-            DATETIMEOFF
+            DATETIMEOFF,
+
+            OPERATOR,
+            MY_NAME,
+            MY_COUNTRY,
+            MY_STATE,
+            MY_COUNTY,
+            MY_CITY,
+            MY_GRIDSQUARE
         };
 
         #region SQLite Commands
@@ -38,12 +46,18 @@ namespace OpenARLog.Data
                                                         "(ID INTEGER PRIMARY KEY NOT NULL, CALLSIGN TEXT NOT NULL, " +
                                                         "NAME TEXT, COUNTRY TEXT, STATE TEXT, COUNTY TEXT, " +
                                                         "CITY TEXT, GRIDSQUARE TEXT, FREQUENCY TEXT, BAND TEXT, " +
-                                                        "MODE TEXT, DATETIMEON DATETIME, DATETIMEOFF DATETIME)";
+                                                        "MODE TEXT, DATETIMEON DATETIME, DATETIMEOFF DATETIME, " +
+                                                        "OPERATOR TEXT, MY_NAME TEXT, MY_COUNTRY TEXT, MY_STATE " +
+                                                        "TEXT, MY_COUNTY TEXT, MY_CITY TEXT, MY_GRIDSQUARE TEXT)";
 
         public static string LOG_DB_INSERT_QSO = "INSERT INTO QSOs (CALLSIGN, NAME, COUNTRY, STATE, COUNTY, CITY, " +
-                                                 "GRIDSQUARE, FREQUENCY, BAND, MODE, DATETIMEON, DATETIMEOFF) VALUES " +
-                                                 "(@callsign, @name, @country, @state, @county, @city, @grid, @freq, " +
-                                                 "@band, @mode, @datetimeon, @datetimeoff)";
+                                                 "GRIDSQUARE, FREQUENCY, BAND, MODE, DATETIMEON, DATETIMEOFF, " +
+                                                 "OPERATOR, MY_NAME, MY_COUNTRY, MY_STATE, MY_COUNTY, MY_CITY, " +
+                                                 "MY_GRIDSQUARE) " +
+                                                 "VALUES (@callsign, @name, @country, @state, @county, @city, " +
+                                                 "@grid, @freq, @band, @mode, @datetimeon, @datetimeoff, " +
+                                                 "@operator, @myname, @mycountry, @mystate, @mycounty, @mycity, " +
+                                                 "@mygridsquare)";
 
         // Query commands
         public static string LOG_DB_QUERY_GENERAL = "SELECT * FROM QSOs";
