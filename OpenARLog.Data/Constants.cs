@@ -13,19 +13,22 @@ namespace OpenARLog.Data
 {
     sealed class Constants
     {
-        public static int INDEX_ID = 0;
-        public static int INDEX_CALLSIGN = 1;
-        public static int INDEX_NAME = 2;
-        public static int INDEX_COUNTRY = 3;
-        public static int INDEX_STATE = 4;
-        public static int INDEX_COUNTY = 5;
-        public static int INDEX_CITY = 6;
-        public static int INDEX_GRIDSQUARE = 7;
-        public static int INDEX_FREQUENCY = 8;
-        public static int INDEX_BAND = 9;
-        public static int INDEX_MODE = 10;
-        public static int INDEX_DATETIMEON = 11;
-        public static int INDEX_DATETIMEOFF = 12;
+        public enum INDEX
+        {
+            ID = 0,
+            CALLSIGN,
+            NAME,
+            COUNTRY,
+            STATE,
+            COUNTY,
+            CITY,
+            GRIDSQUARE,
+            FREQUENCY,
+            BAND,
+            MODE,
+            DATETIMEON,
+            DATETIMEOFF
+        };
 
         #region SQLite Commands
 
