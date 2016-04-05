@@ -365,6 +365,34 @@ namespace OpenARLog.ADIF
                             temp.DateTimeOff = MergeDateAndTime(temp.DateTimeOff, GetDateFromRecord(x));
                             break;
 
+                        case "OPERATOR":
+                            temp.Operator = x._data;
+                            break;
+
+                        case "MY_NAME":
+                            temp.My_Name = x._data;
+                            break;
+
+                        case "MY_COUNTRY":
+                            temp.My_Country = x._data;
+                            break;
+
+                        case "My_STATE":
+                            temp.My_State = x._data;
+                            break;
+
+                        case "MY_CNTY":
+                            temp.My_County = x._data;
+                            break;
+
+                        case "MY_CITY":
+                            temp.My_City = x._data;
+                            break;
+
+                        case "MY_GRIDSQUARE":
+                            temp.My_GridSquare = x._data;
+                            break;
+
                         default:
                             break;
                     }
