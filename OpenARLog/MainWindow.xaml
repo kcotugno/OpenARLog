@@ -64,12 +64,16 @@
                         <ComboBox Name="ModeTxt" IsEditable="True" TabIndex="9" />
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Time Info" Grid.Column="1" Margin="10,172,10,0" VerticalAlignment="Top">
+                <GroupBox Header="Date and Time Info" Grid.Column="1" Margin="10,172,10,0" VerticalAlignment="Top">
                     <StackPanel>
                         <Label Content="Time On" />
-                        <TextBox Name="TimeOnTxt" TextWrapping="Wrap" TabIndex="10" />
+                        <TextBox Name="TimeOnTxt" TextWrapping="Wrap" TabIndex="10" GotFocus="TimeOnGotFocus" />
+                        <Label Content="Date On" />
+                        <TextBox Name="DateOnTxt" TextWrapping="Wrap" TabIndex="11" GotFocus="DateOnGotFocus"/>
                         <Label Content="Time Off" />
-                        <TextBox Name="TimeOffTxt" TextWrapping="Wrap" TabIndex="11" />
+                        <TextBox Name="TimeOffTxt" TextWrapping="Wrap" TabIndex="12" GotFocus="TimeOffGotFocus"/>
+                        <Label Content="Date Off" />
+                        <TextBox Name="DateOffTxt" TextWrapping="Wrap" TabIndex="13" GotFocus="DateOffGotFocus"/>
                     </StackPanel>
                 </GroupBox>
             </Grid>
