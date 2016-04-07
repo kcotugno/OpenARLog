@@ -16,7 +16,8 @@ namespace OpenARLog.Data
         // Varibles cannot have a number as the first character. So we reverse the meter position.
         public enum BANDS
         {
-            M2190 = 0,
+            NONE = 0,
+            M2190,
             M630,
             M560,
             M160,
@@ -49,7 +50,8 @@ namespace OpenARLog.Data
     };
 
 
-        private static string[] all = { "2190m",
+        private static string[] all = { string.Empty,
+                                        "2190m",
                                         "630m",
                                         "560m",
                                         "160m",
