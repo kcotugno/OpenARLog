@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Band.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="QSO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

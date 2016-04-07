@@ -33,6 +33,16 @@ namespace OpenARLog.Data
         public DateTime? DateTimeOn { get; set; }
         public DateTime? DateTimeOff { get; set; }
 
+        // Logging station's info.
+        public string Operator { get; set; }
+        public string My_Name { get; set; }
+
+        public string My_Country { get; set; }
+        public string My_State { get; set; }
+        public string My_County { get; set; }
+        public string My_City { get; set; }
+        public string My_GridSquare { get; set; }
+
         public QSO()
         {
             Clear();
@@ -65,6 +75,15 @@ namespace OpenARLog.Data
 
             DateTimeOn = null;
             DateTimeOff = null;
+
+            Operator = string.Empty;
+            My_Name = string.Empty;
+
+            My_Country = string.Empty;
+            My_State = string.Empty;
+            My_County = string.Empty;
+            My_City = string.Empty;
+            My_GridSquare = string.Empty;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace OpenARLog.Data
 
         private bool IsDatabase()
         {
-            SQLiteCommand sqliteCmd = new SQLiteCommand("SELECT * FROM QSOs", _qsoLogConnection);
+            SQLiteCommand sqliteCmd = new SQLiteCommand(Constants.LOG_DB_QUERY_GENERAL, _qsoLogConnection);
             SQLiteDataReader data;
 
             bool hasTable;
@@ -140,19 +140,27 @@ namespace OpenARLog.Data
             {
                 qso.Add(new QSO
                 {
-                    ID = data.GetInt64(Constants.INDEX_ID),
-                    Callsign = data.GetString(Constants.INDEX_CALLSIGN),
-                    Name = data.IsDBNull(Constants.INDEX_NAME) ? null : data.GetString(Constants.INDEX_NAME),
-                    Country = data.IsDBNull(Constants.INDEX_COUNTRY) ? null : data.GetString(Constants.INDEX_COUNTRY),
-                    State = data.IsDBNull(Constants.INDEX_STATE) ? null : data.GetString(Constants.INDEX_STATE),
-                    County = data.IsDBNull(Constants.INDEX_COUNTY) ? null : data.GetString(Constants.INDEX_COUNTY),
-                    City = data.IsDBNull(Constants.INDEX_CITY) ? null : data.GetString(Constants.INDEX_CITY),
-                    GridSquare = data.IsDBNull(Constants.INDEX_GRIDSQUARE) ? null : data.GetString(Constants.INDEX_GRIDSQUARE),
-                    Frequency = data.IsDBNull(Constants.INDEX_FREQUENCY) ? null : data.GetString(Constants.INDEX_FREQUENCY),
-                    Band = data.IsDBNull(Constants.INDEX_BAND) ? null : data.GetString(Constants.INDEX_BAND),
-                    Mode = data.IsDBNull(Constants.INDEX_MODE) ? null : data.GetString(Constants.INDEX_MODE),
-                    DateTimeOn = data.IsDBNull(Constants.INDEX_DATETIMEON) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_DATETIMEON),
-                    DateTimeOff = data.IsDBNull(Constants.INDEX_DATETIMEOFF) ? (DateTime?)null : data.GetDateTime(Constants.INDEX_DATETIMEOFF)
+                    ID = data.GetInt64((int)Constants.INDEX.ID),
+                    Callsign = data.GetString((int)Constants.INDEX.CALLSIGN),
+                    Name = data.IsDBNull((int)Constants.INDEX.NAME) ? null : data.GetString((int)Constants.INDEX.NAME),
+                    Country = data.IsDBNull((int)Constants.INDEX.COUNTRY) ? null : data.GetString((int)Constants.INDEX.COUNTRY),
+                    State = data.IsDBNull((int)Constants.INDEX.STATE) ? null : data.GetString((int)Constants.INDEX.STATE),
+                    County = data.IsDBNull((int)Constants.INDEX.COUNTY) ? null : data.GetString((int)Constants.INDEX.COUNTY),
+                    City = data.IsDBNull((int)Constants.INDEX.CITY) ? null : data.GetString((int)Constants.INDEX.CITY),
+                    GridSquare = data.IsDBNull((int)Constants.INDEX.GRIDSQUARE) ? null : data.GetString((int)Constants.INDEX.GRIDSQUARE),
+                    Frequency = data.IsDBNull((int)Constants.INDEX.FREQUENCY) ? null : data.GetString((int)Constants.INDEX.FREQUENCY),
+                    Band = data.IsDBNull((int)Constants.INDEX.BAND) ? null : data.GetString((int)Constants.INDEX.BAND),
+                    Mode = data.IsDBNull((int)Constants.INDEX.MODE) ? null : data.GetString((int)Constants.INDEX.MODE),
+                    DateTimeOn = data.IsDBNull((int)Constants.INDEX.DATETIMEON) ? (DateTime?)null : data.GetDateTime((int)Constants.INDEX.DATETIMEON),
+                    DateTimeOff = data.IsDBNull((int)Constants.INDEX.DATETIMEOFF) ? (DateTime?)null : data.GetDateTime((int)Constants.INDEX.DATETIMEOFF),
+
+                    Operator = data.IsDBNull((int)Constants.INDEX.OPERATOR) ? null : data.GetString((int)Constants.INDEX.OPERATOR),
+                    My_Name = data.IsDBNull((int)Constants.INDEX.MY_NAME) ? null : data.GetString((int)Constants.INDEX.MY_NAME),
+                    My_Country = data.IsDBNull((int)Constants.INDEX.MY_COUNTRY) ? null : data.GetString((int)Constants.INDEX.MY_COUNTRY),
+                    My_State = data.IsDBNull((int)Constants.INDEX.MY_STATE) ? null : data.GetString((int)Constants.INDEX.MY_STATE),
+                    My_County = data.IsDBNull((int)Constants.INDEX.MY_COUNTY) ? null : data.GetString((int)Constants.INDEX.MY_COUNTY),
+                    My_City = data.IsDBNull((int)Constants.INDEX.MY_CITY) ? null : data.GetString((int)Constants.INDEX.MY_CITY),
+                    My_GridSquare = data.IsDBNull((int)Constants.INDEX.MY_GRIDSQUARE) ? null : data.GetString((int)Constants.INDEX.MY_GRIDSQUARE)
 
                 });
             }
@@ -181,7 +189,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE ID = @id";
+            string sql = Constants.LOG_DB_QUERY_ID;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -205,7 +213,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
+            string sql = Constants.LOG_DB_QUERY_CALLSIGN;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -229,7 +237,7 @@ namespace OpenARLog.Data
         {
             List<QSO> qso = new List<QSO>();
 
-            string sql = "SELECT * FROM QSOs WHERE NAME = @name";
+            string sql = Constants.LOG_DB_QUERY_NAME;
 
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
             {
@@ -271,7 +279,13 @@ namespace OpenARLog.Data
                 sqliteCmd.Parameters.AddWithValue("@mode", qso.Mode);
                 sqliteCmd.Parameters.AddWithValue("@datetimeon", DateTimeToSQLite(qso.DateTimeOn));
                 sqliteCmd.Parameters.AddWithValue("@datetimeoff", DateTimeToSQLite(qso.DateTimeOff));
-
+                sqliteCmd.Parameters.AddWithValue("@operator", qso.Operator);
+                sqliteCmd.Parameters.AddWithValue("@myname", qso.My_Name);
+                sqliteCmd.Parameters.AddWithValue("@mycountry", qso.My_Country);
+                sqliteCmd.Parameters.AddWithValue("@mystate", qso.My_State);
+                sqliteCmd.Parameters.AddWithValue("@mycounty", qso.My_County);
+                sqliteCmd.Parameters.AddWithValue("@mycity", qso.My_City);
+                sqliteCmd.Parameters.AddWithValue("@mygridsquare", qso.My_GridSquare);
 
                 sqliteCmd.ExecuteNonQuery();
 
