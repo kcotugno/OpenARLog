@@ -11,7 +11,7 @@
 
 namespace OpenARLog.Data
 {
-    sealed class BAND
+    public sealed class Band
     {
         // Varibles cannot have a number as the first character. So we reverse the meter position.
         public enum BANDS

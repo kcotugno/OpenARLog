@@ -11,7 +11,7 @@
 
 namespace OpenARLog.Data
 {
-    sealed class Constants
+    public sealed class Constants
     {
         public enum INDEX
         {
