@@ -34,8 +34,10 @@ namespace OpenARLog
     /// </summary>
     public partial class MainWindow : Window
     {
-        QSOLog _qsoLog;
-        List<QSO> _qsos;
+        private QSOLog _qsoLog;
+        private List<QSO> _qsos;
+
+        private bool uiVisible = false;
 
         public MainWindow()
         {
@@ -45,6 +47,9 @@ namespace OpenARLog
             _qsoLog.OpenLog(Properties.Settings.Default.LogPath);
 
             _qsos = new List<QSO>();
+
+            // Hide extra entry fields.
+            moreContGroup.Visibility = Visibility.Collapsed;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -55,32 +60,32 @@ namespace OpenARLog
         
         #region Menu Click Handlers
         
-        private void newDBMenuClick(object sender, RoutedEventArgs e)
+        private void NewDBMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void openDBMenuClick(object sender, RoutedEventArgs e)
+        private void OpenDBMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void importADIFMenuClick(object sender, RoutedEventArgs e)
+        private void ImportADIFMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void exportADIFMenuClick(object sender, RoutedEventArgs e)
+        private void ExportADIFMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void aboutMenuClick(object sender, RoutedEventArgs e)
+        private void AboutMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
         
-        private void exitMenuItemClick(object sender, RoutedEventArgs e)
+        private void ExitMenuItemClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -88,68 +93,86 @@ namespace OpenARLog
 
         #region Main Ui Events
 
-        private void logBtnClick(object sender, RoutedEventArgs e)
+        private void ShowBtnClick(object sender, RoutedEventArgs e)
         {
-            if (IsValidTime(TimeOnTxt.Text) == false || IsValidDate(DateOnTxt.Text) == false)
+            if (uiVisible == true)
+            {
+                uiVisible = false;
+                showBtn.Content = "More";
+
+                moreContGroup.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                uiVisible = true;
+                showBtn.Content = "Less";
+
+                moreContGroup.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void LogBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (IsValidTime(timeOnTxt.Text) == false || IsValidDate(dateOnTxt.Text) == false)
                 return;
 
-            if (IsValidTime(TimeOffTxt.Text) == false || IsValidDate(DateOffTxt.Text) == false)
+            if (IsValidTime(timeOffTxt.Text) == false || IsValidDate(dateOffTxt.Text) == false)
                 return;
 
             QSO contact = new QSO()
             {
-                Callsign = CallsignTxt.Text,
-                Name = NameTxt.Text,
-                Country = CountryTxt.Text,
-                State = StateTxt.Text,
-                County = CountyTxt.Text,
-                City = CityTxt.Text,
-                GridSquare = GridSquareTxt.Text,
-                Band = BandTxt.Text,
-                Mode = ModeTxt.Text,
-                Frequency = FrequencyTxt.Text,
-                DateTimeOn = GetDateTime(TimeOnTxt.Text, DateOnTxt.Text),
-                DateTimeOff = GetDateTime(TimeOffTxt.Text, DateOffTxt.Text)
+                Callsign = callsignTxt.Text,
+                Name = nameTxt.Text,
+                Country = countryTxt.Text,
+                State = stateTxt.Text,
+                County = countyTxt.Text,
+                City = cityTxt.Text,
+                GridSquare = gridSquareTxt.Text,
+                Band = bandTxt.Text,
+                Mode = modeTxt.Text,
+                Frequency = frequencyTxt.Text,
+                DateTimeOn = GetDateTime(timeOnTxt.Text, dateOnTxt.Text),
+                DateTimeOff = GetDateTime(timeOffTxt.Text, dateOffTxt.Text)
             };
 
             _qsoLog.InsertQSO(contact);
         }
 
-        private void resetBtnBlick(object sender, RoutedEventArgs e)
+        private void ResetBtnBlick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
         private void CallsignTxtChanged(object sender, RoutedEventArgs e)
         {
-            if (CallsignTxt.Text == string.Empty)
-                LogBtn.IsEnabled = false;
+            if (callsignTxt.Text == string.Empty)
+                logBtn.IsEnabled = false;
             else
-                LogBtn.IsEnabled = true;
+                logBtn.IsEnabled = true;
         }
 
         private void TimeOnGotFocus(object sender, RoutedEventArgs e)
         {
-            if (TimeOnTxt.Text == string.Empty)
-                TimeOnTxt.Text = DateTime.Now.ToString("HH:mm:ss");
+            if (timeOnTxt.Text == string.Empty)
+                timeOnTxt.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
         private void DateOnGotFocus(object sender, RoutedEventArgs e)
         {
-            if (DateOnTxt.Text == string.Empty)
-                DateOnTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            if (dateOnTxt.Text == string.Empty)
+                dateOnTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
         }
 
         private void TimeOffGotFocus(object sender, RoutedEventArgs e)
         {
-            if (TimeOffTxt.Text == string.Empty)
-                TimeOffTxt.Text = DateTime.Now.ToString("HH:mm:ss");
+            if (timeOffTxt.Text == string.Empty)
+                timeOffTxt.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
         private void DateOffGotFocus(object sender, RoutedEventArgs e)
         {
-            if (DateOffTxt.Text == string.Empty)
-                DateOffTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            if (dateOffTxt.Text == string.Empty)
+                dateOffTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
         }
 
         #endregion
