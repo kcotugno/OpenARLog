@@ -1,5 +1,10 @@
 # OpenARLog
-Open source Amateur Radio logging Application for Windows
+Open source Amateur Radio logging Application for Windows.
+
+Work is done in my spare time while attending school. Thus it is coming slowly but surely. I am
+aiming for an alpha relase this summer. C# and the .Net Framework are new to me so the code will
+be cleaned over time as I learn more. Feel free to send a Pull-Request if you wish to contribute.
+
 
 OpenARLog: This project contains the front-end code, including the UI. So far, only a basic
 non-functional interface has been implemented.
