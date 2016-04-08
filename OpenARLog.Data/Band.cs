@@ -9,14 +9,19 @@
  * Date: 4/6/2016
  */
 
+using System;
+using System.Collections;
+using System.Data;
+
 namespace OpenARLog.Data
 {
-    public sealed class Band
+    public class Band
     {
         // Varibles cannot have a number as the first character. So we reverse the meter position.
         public enum BANDS
         {
-            M2190 = 0,
+            NONE = 0,
+            M2190,
             M630,
             M560,
             M160,
@@ -46,48 +51,30 @@ namespace OpenARLog.Data
             MM2_5,
             MM2,
             MM1
-    };
+        };
 
+        private DataTable _bandTable;
+        private DataTypesDb _dataTypesDb;
 
-        private static string[] all = { "2190m",
-                                        "630m",
-                                        "560m",
-                                        "160m",
-                                        "80m",
-                                        "60m",
-                                        "40m",
-                                        "30m",
-                                        "20m",
-                                        "17m",
-                                        "15m",
-                                        "12m",
-                                        "10m",
-                                        "6m",
-                                        "4m",
-                                        "2m",
-                                        "1.25m",
-                                        "70cm",
-                                        "33cm",
-                                        "23cm",
-                                        "13cm",
-                                        "9cm",
-                                        "6cm",
-                                        "3cm",
-                                        "1.25cm",
-                                        "6mm",
-                                        "4mm",
-                                        "2.5mm",
-                                        "2mm",
-                                        "1mm"
-                                        };
-
-        public static bool IsValidBand(string text)
+        public Band (DataTypesDb db)
         {
-            for (int i = 0; i < all.Length; i++)
-                if (text.ToLower() == all[i])
-                    return true;
+            _dataTypesDb = db;
+        }
 
-            return false;
+        public void LoadBands()
+        { 
+            _bandTable =  _dataTypesDb.GetTable(Constants.TYPES.Bands);
+        }
+
+        public DataTable GetBandTable()
+        {
+            return _bandTable;
+        }
+
+        public bool IsValidBand(string text)
+        {
+            // TODO
+            return true;
         }
     }
 }

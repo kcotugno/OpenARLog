@@ -13,6 +13,11 @@ namespace OpenARLog.Data
 {
     public sealed class Constants
     {
+        public enum TYPES
+        {
+            Bands
+        };
+
         public enum INDEX
         {
             ID = 0,
@@ -38,7 +43,11 @@ namespace OpenARLog.Data
             MY_GRIDSQUARE
         };
 
+        public static string TYPE_DATA_DB_NAME = "type_data.s3db";
+
         #region SQLite Commands
+
+        public static string DB_QUERY_GENERAL = "SELECT * FROM ";
 
         public static string LOG_DB_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='QSOs'";
 
