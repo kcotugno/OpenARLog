@@ -50,6 +50,7 @@ namespace OpenARLog
 
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
+            extraQSLGroup.Visibility = Visibility.Collapsed;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -101,6 +102,7 @@ namespace OpenARLog
                 showBtn.Content = "More";
 
                 moreContGroup.Visibility = Visibility.Collapsed;
+                extraQSLGroup.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -108,6 +110,7 @@ namespace OpenARLog
                 showBtn.Content = "Less";
 
                 moreContGroup.Visibility = Visibility.Visible;
+                extraQSLGroup.Visibility = Visibility.Visible;
             }
         }
 
