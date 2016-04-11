@@ -15,8 +15,11 @@ namespace OpenARLog.Data
     {
         public enum TYPES
         {
-            BANDS
+            BANDS = 0,
+            COUNTRIES
         };
+
+        private static string[] _types = { "Bands", "Country_Codes_and_Names" };
 
         public enum INDEX
         {
@@ -76,6 +79,15 @@ namespace OpenARLog.Data
         public static string LOG_DB_QUERY_CALLSIGN = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
 
         public static string LOG_DB_QUERY_NAME = "SELECT * FROM QSOs WHERE NAME = @name";
+
+        #endregion
+
+        #region Static Methods
+
+        public static string GetTypeString(Constants.TYPES type)
+        {
+            return _types[(int)type];
+        }
 
         #endregion
     }

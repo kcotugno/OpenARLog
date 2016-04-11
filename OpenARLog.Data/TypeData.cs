@@ -30,5 +30,17 @@ namespace OpenARLog.Data
         {
             _dataTable = _typeDataDb.GetTable(_type);
         }
+
+        public void LoadAndUpdate()
+        {
+            Load();
+            PopulateList();
+        }
+
+        #region Abstract Methods
+
+        public abstract void PopulateList();
+
+        #endregion
     }
 }

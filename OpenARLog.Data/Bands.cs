@@ -61,7 +61,7 @@ namespace OpenARLog.Data
             // Do Nothing
         }
 
-        public void PopulateList()
+        public override void PopulateList()
         {
             if (_HamBands == null)
                 _HamBands = new List<BandModel>();
@@ -79,12 +79,6 @@ namespace OpenARLog.Data
 
                 _HamBands.Add(band);
             }
-        }
-
-        public void LoadAndUpdate()
-        {
-            base.Load();
-            PopulateList();
         }
 
         public bool IsValidBand(string text)

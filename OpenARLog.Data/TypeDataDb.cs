@@ -26,7 +26,7 @@ namespace OpenARLog.Data
 
         public DataTable GetTable(Constants.TYPES type)
         {
-            DataTable table = base.GetDataFromTable(type.ToString());
+            DataTable table = base.GetDataFromTable(Constants.GetTypeString(type));
 
             return table;
         }
