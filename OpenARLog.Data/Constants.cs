@@ -15,7 +15,7 @@ namespace OpenARLog.Data
     {
         public enum TYPES
         {
-            Bands
+            BANDS
         };
 
         public enum INDEX

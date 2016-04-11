@@ -28,7 +28,7 @@ using OpenARLog.Data;
 
 namespace OpenARLog
 {
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -39,18 +39,37 @@ namespace OpenARLog
 
         private bool uiVisible = false;
 
+        // Types
+        private DataTypesDb _dataTypesDb;
+
+        private Bands _bandsdb;
+
+        public List<BandModel> Bands { get { return _bands; } }
+        public List<BandModel> _bands;
+
         public MainWindow()
         {
-            InitializeComponent();
 
             _qsoLog = new QSOLog();
+            // TODO Add support for a log from other locations, loaded from preferences.
             _qsoLog.OpenLog(Properties.Settings.Default.LogPath);
 
             _qsos = new List<QSO>();
 
+            _dataTypesDb = new DataTypesDb();
+
+            _bandsdb = new Bands(_dataTypesDb);
+            _bandsdb.LoadAndUpdate();
+            _bands = _bandsdb.HamBands;
+           
+
+            DataContext = this;
+
+            InitializeComponent();
+
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
-        }
+    }
 
         private void WindowClosed(object sender, EventArgs e)
         {

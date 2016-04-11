@@ -9,13 +9,12 @@
  * Date: 4/6/2016
  */
 
-using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 
 namespace OpenARLog.Data
 {
-    public class Band
+    public class Bands : TypeData
     {
         // Varibles cannot have a number as the first character. So we reverse the meter position.
         public enum BANDS
@@ -53,22 +52,39 @@ namespace OpenARLog.Data
             MM1
         };
 
-        private DataTable _bandTable;
-        private DataTypesDb _dataTypesDb;
+        public List<BandModel> HamBands { get { return _HamBands; } }
 
-        public Band (DataTypesDb db)
+        private List<BandModel> _HamBands;
+
+        public Bands(DataTypesDb db) : base(db, Constants.TYPES.BANDS)
         {
-            _dataTypesDb = db;
+            // Do Nothing
         }
 
-        public void LoadBands()
-        { 
-            _bandTable =  _dataTypesDb.GetTable(Constants.TYPES.Bands);
+        public void PopulateList()
+        {
+            if (_HamBands == null)
+                _HamBands = new List<BandModel>();
+
+            _HamBands.Clear();
+
+            foreach (DataRow row in _dataTable.Rows)
+            {
+                BandModel band = new BandModel()
+                {
+                    Band = row.Field<string>("Band"),
+                    LowerFrequency = row.Field<double?>("Lower_Freq_MHz"),
+                    UpperFrequency = row.Field<double?>("Upper_Freq_MHz")
+                };
+
+                _HamBands.Add(band);
+            }
         }
 
-        public DataTable GetBandTable()
+        public void LoadAndUpdate()
         {
-            return _bandTable;
+            base.Load();
+            PopulateList();
         }
 
         public bool IsValidBand(string text)

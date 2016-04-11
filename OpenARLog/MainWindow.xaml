@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:OpenARLog"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Data="clr-namespace:OpenARLog.Data;assembly=OpenARLog.Data" mc:Ignorable="d"
         x:Class="OpenARLog.MainWindow"
         Title="OpenARLog" Height="768" Width="1024" MinWidth="800" MinHeight="600" Closed="WindowClosed" >
     <Grid Margin="0,0,0,0" >
@@ -55,13 +55,13 @@
                     </GroupBox>
                     <GroupBox Name="moreContGroup" Header="More Contact Info" Grid.Column="0" Margin="0,0,10,0">
                         <StackPanel>
-                            <Label>Age</Label>
+                            <Label Content="Age"/>
                             <TextBox Name="ageTxt" TextWrapping="Wrap"/>
-                            <Label>County</Label>
+                            <Label Content="County"/>
                             <TextBox Name="countyTxt" TextWrapping="Wrap"/>
-                            <Label>Distance</Label>
+                            <Label Content="Distance"/>
                             <TextBox Name="distTxt" TextWrapping="Wrap"/>
-                            <Label>E-Mail</Label>
+                            <Label Content="E-Mail"/>
                             <TextBox Name="emailTxt" TextWrapping="Wrap"/>
                         </StackPanel>
                     </GroupBox>
@@ -70,7 +70,7 @@
                     <GroupBox Header="Radio Info" VerticalAlignment="Top" Margin="10,0,0,0">
                         <StackPanel>
                             <Label Content="Band" />
-                            <ComboBox Name="bandTxt" TabIndex="7" />
+                            <ComboBox Name="bandTxt"  ItemsSource="{Binding Bands}" DisplayMemberPath="Band" SelectedValuePath="Band" SelectedValue="Band"  TabIndex="7" />
                             <Label Content="Frequency" />
                             <TextBox Name="frequencyTxt" TextWrapping="Wrap" TabIndex="8" />
                             <Label Content="Mode" />
@@ -98,7 +98,5 @@
         <Button Name="showBtn" Grid.Column="1" Grid.Row="1" Margin="10,0,0,10" HorizontalAlignment="Left" Height="22" VerticalAlignment="Bottom" Click="ShowBtnClick" Width="75" Content="More"/>
         <Button Name="logBtn" Grid.Column="1" Grid.Row="1" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="LogBtnClick" Content="Log"/>
         <Button Name="clearBtn" Grid.Column="1" Grid.Row="1" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="ResetBtnBlick" Content="Clear"/>
-
-
     </Grid>
 </Window>
