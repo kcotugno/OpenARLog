@@ -28,23 +28,55 @@ using OpenARLog.Data;
 
 namespace OpenARLog
 {
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        QSOLog _qsoLog;
-        List<QSO> _qsos;
+        private QSOLog _qsoLog;
+        private List<QSO> _qsos;
+
+        private bool uiVisible = false;
+
+        // Types
+        private TypeDataDb _dataTypesDb;
+
+        private BandsManager _bandsdb;
+        private CountriesManager _countriesMng;
+
+        public List<BandModel> Bands { get { return _bands; } }
+        public List<BandModel> _bands;
+
+        public List<CountryModel> Countries { get { return _countries; } }
+        private List<CountryModel> _countries;
 
         public MainWindow()
         {
-            InitializeComponent();
 
             _qsoLog = new QSOLog();
+            // TODO Add support for a log from other locations, loaded from preferences.
             _qsoLog.OpenLog(Properties.Settings.Default.LogPath);
 
             _qsos = new List<QSO>();
+
+            _dataTypesDb = new TypeDataDb();
+
+            _bandsdb = new BandsManager(_dataTypesDb);
+            _bandsdb.LoadAndUpdate();
+            _bands = _bandsdb.HamBands;
+
+            _countriesMng = new CountriesManager(_dataTypesDb);
+            _countriesMng.LoadAndUpdate();
+            _countries = _countriesMng.Countries;
+
+            DataContext = this;
+
+            InitializeComponent();
+
+            // Hide extra entry fields.
+            moreContGroup.Visibility = Visibility.Collapsed;
+            extraQSLGroup.Visibility = Visibility.Collapsed;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -55,71 +87,124 @@ namespace OpenARLog
         
         #region Menu Click Handlers
         
-        private void newDBMenuClick(object sender, RoutedEventArgs e)
+        private void NewDBMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void openDBMenuClick(object sender, RoutedEventArgs e)
+        private void OpenDBMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void importADIFMenuClick(object sender, RoutedEventArgs e)
+        private void ImportADIFMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void exportADIFMenuClick(object sender, RoutedEventArgs e)
+        private void ExportADIFMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
-        private void aboutMenuClick(object sender, RoutedEventArgs e)
+        private void AboutMenuClick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
         
-        private void exitMenuItemClick(object sender, RoutedEventArgs e)
+        private void ExitMenuItemClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
         #endregion
-        
 
-        private void logBtnClick(object sender, RoutedEventArgs e)
+        #region Main Ui Events
+
+        private void ShowBtnClick(object sender, RoutedEventArgs e)
         {
+            if (uiVisible == true)
+            {
+                uiVisible = false;
+                showBtn.Content = "More";
+
+                moreContGroup.Visibility = Visibility.Collapsed;
+                extraQSLGroup.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                uiVisible = true;
+                showBtn.Content = "Less";
+
+                moreContGroup.Visibility = Visibility.Visible;
+                extraQSLGroup.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void LogBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (IsValidTime(timeOnTxt.Text) == false || IsValidDate(dateOnTxt.Text) == false)
+                return;
+
+            if (IsValidTime(timeOffTxt.Text) == false || IsValidDate(dateOffTxt.Text) == false)
+                return;
+
             QSO contact = new QSO()
             {
-                Callsign = CallsignTxt.Text,
-                Name = NameTxt.Text,
-                Country = CountryTxt.Text,
-                State = StateTxt.Text,
-                County = CountyTxt.Text,
-                City = CityTxt.Text,
-                GridSquare = GridSquareTxt.Text,
-                Band = BandTxt.Text,
-                Mode = ModeTxt.Text,
-                Frequency = FrequencyTxt.Text,
-                //TimeOn = TimeOffTxt.Text,
-                //TimeOff = TimeOffTxt.Text
+                Callsign = callsignTxt.Text,
+                Name = nameTxt.Text,
+                Country = countryTxt.Text,
+                State = stateTxt.Text,
+                County = countyTxt.Text,
+                City = cityTxt.Text,
+                GridSquare = gridSquareTxt.Text,
+                Band = bandTxt.Text,
+                Mode = modeTxt.Text,
+                Frequency = frequencyTxt.Text,
+                DateTimeOn = GetDateTime(timeOnTxt.Text, dateOnTxt.Text),
+                DateTimeOff = GetDateTime(timeOffTxt.Text, dateOffTxt.Text)
             };
 
             _qsoLog.InsertQSO(contact);
         }
 
-        private void resetBtnBlick(object sender, RoutedEventArgs e)
+        private void ResetBtnBlick(object sender, RoutedEventArgs e)
         {
             showTODOMessage();
         }
 
         private void CallsignTxtChanged(object sender, RoutedEventArgs e)
         {
-            if (CallsignTxt.Text == string.Empty)
-                LogBtn.IsEnabled = false;
+            if (callsignTxt.Text == string.Empty)
+                logBtn.IsEnabled = false;
             else
-                LogBtn.IsEnabled = true;
+                logBtn.IsEnabled = true;
         }
+
+        private void TimeOnGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (timeOnTxt.Text == string.Empty)
+                timeOnTxt.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void DateOnGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (dateOnTxt.Text == string.Empty)
+                dateOnTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
+        }
+
+        private void TimeOffGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (timeOffTxt.Text == string.Empty)
+                timeOffTxt.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void DateOffGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (dateOffTxt.Text == string.Empty)
+                dateOffTxt.Text = DateTime.Now.ToString("MM/dd/yyyy");
+        }
+
+        #endregion
 
         #region User Messages
 
@@ -130,5 +215,83 @@ namespace OpenARLog
 
         #endregion
 
+        #region Helper Functions
+
+        private bool IsValidDateOrTime(string check, char delimiter)
+        {
+            if (check == string.Empty)
+                return true;
+
+            if (check.Length == 2 || check.Length == 3)
+            {
+                for (int i = 0; i < check.Length; i++)
+                {
+                    try
+                    {
+                        Convert.ToInt32(check[i]);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool IsValidTime(string time)
+        {
+            return IsValidDateOrTime(time, ':');
+        }
+
+        private bool IsValidDate(string date)
+        {
+            return IsValidDateOrTime(date, '/');
+        }
+
+        private DateTime? GetDateTime(string time, string date)
+        {
+            if (time == string.Empty && date == string.Empty)
+                return null;
+
+            int year = 1500;
+            int month = 1;
+            int day = 1;
+            int hour = 0;
+            int minutes = 0;
+            int seconds = 0;
+
+            string[] _date = date.Split('/');
+            string[] _time = time.Split(':');
+
+            DateTime datetime;
+            
+            try
+            {
+                month = Convert.ToInt32(_date[0]);
+                day = Convert.ToInt32(_date[1]);
+                year = _date.Length == 3 ? Convert.ToInt32(_date[2]) : 2016;
+
+                // If the year is in 2 digit form, we will just assume it is a 2000 year.
+                if (year < 100)
+                    year += 2000;
+
+                hour = Convert.ToInt32(_time[0]);
+                minutes = Convert.ToInt32(_time[1]);
+                seconds = _time.Length == 3 ? Convert.ToInt32(_time[2]) : 0;
+
+                datetime = new DateTime(year, month, day, hour, minutes, seconds);
+            }
+            catch
+            {
+                return null;
+            }
+
+
+            return datetime;
+        }
+
+        #endregion
     }
 }

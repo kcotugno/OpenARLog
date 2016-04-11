@@ -13,6 +13,14 @@ namespace OpenARLog.Data
 {
     public sealed class Constants
     {
+        public enum TYPES
+        {
+            BANDS = 0,
+            COUNTRIES
+        };
+
+        private static string[] _types = { "Bands", "Country_Codes_and_Names" };
+
         public enum INDEX
         {
             ID = 0,
@@ -38,7 +46,11 @@ namespace OpenARLog.Data
             MY_GRIDSQUARE
         };
 
+        public static string TYPE_DATA_DB_NAME = "type_data.s3db";
+
         #region SQLite Commands
+
+        public static string DB_QUERY_GENERAL = "SELECT * FROM ";
 
         public static string LOG_DB_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='QSOs'";
 
@@ -67,6 +79,15 @@ namespace OpenARLog.Data
         public static string LOG_DB_QUERY_CALLSIGN = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
 
         public static string LOG_DB_QUERY_NAME = "SELECT * FROM QSOs WHERE NAME = @name";
+
+        #endregion
+
+        #region Static Methods
+
+        public static string GetTypeString(Constants.TYPES type)
+        {
+            return _types[(int)type];
+        }
 
         #endregion
     }
