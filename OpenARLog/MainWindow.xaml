@@ -89,7 +89,7 @@
                             <TextBox Name="dateOffTxt" TextWrapping="Wrap" TabIndex="13" GotFocus="DateOffGotFocus"/>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Name="extraQSLGroup" Margin="10,0,0,0" >
+                    <GroupBox Name="extraQSLGroup" Header="QSL Status" Margin="10,0,0,0" >
                         <StackPanel>
                             <Label Content="QSL Received" />
                             <ComboBox Name="qslRecTxt" />
