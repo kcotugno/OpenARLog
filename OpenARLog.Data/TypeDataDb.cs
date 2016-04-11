@@ -16,17 +16,16 @@ using System.Data.SQLite;
 
 namespace OpenARLog.Data
 {
-    public class DataTypesDb : Database
+    public class TypeDataDb : Database
     {
 
-        public DataTypesDb () : base()
+        public TypeDataDb () : base()
         {
             base.OpenConnection(Constants.TYPE_DATA_DB_NAME);
         }
 
         public DataTable GetTable(Constants.TYPES type)
         {
-
             DataTable table = base.GetDataFromTable(type.ToString());
 
             return table;

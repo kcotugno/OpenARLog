@@ -40,7 +40,7 @@ namespace OpenARLog
         private bool uiVisible = false;
 
         // Types
-        private DataTypesDb _dataTypesDb;
+        private TypeDataDb _dataTypesDb;
 
         private Bands _bandsdb;
 
@@ -56,7 +56,7 @@ namespace OpenARLog
 
             _qsos = new List<QSO>();
 
-            _dataTypesDb = new DataTypesDb();
+            _dataTypesDb = new TypeDataDb();
 
             _bandsdb = new Bands(_dataTypesDb);
             _bandsdb.LoadAndUpdate();

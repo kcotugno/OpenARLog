@@ -18,9 +18,9 @@ namespace OpenARLog.Data
         protected DataTable _dataTable;
         protected Constants.TYPES _type { get; set; }
 
-        private DataTypesDb _typeDataDb;
+        private TypeDataDb _typeDataDb;
 
-        public TypeData(DataTypesDb db, Constants.TYPES type)
+        public TypeData(TypeDataDb db, Constants.TYPES type)
         {
             _typeDataDb = db;
             _type = type;

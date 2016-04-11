@@ -56,7 +56,7 @@ namespace OpenARLog.Data
 
         private List<BandModel> _HamBands;
 
-        public Bands(DataTypesDb db) : base(db, Constants.TYPES.BANDS)
+        public Bands(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
         {
             // Do Nothing
         }

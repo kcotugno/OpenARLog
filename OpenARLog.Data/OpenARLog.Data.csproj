@@ -69,7 +69,7 @@
     <Compile Include="BandModel.cs" />
     <Compile Include="Bands.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="DataTypesDb.cs" />
+    <Compile Include="TypeDataDb.cs" />
     <Compile Include="QSO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QSOLog.cs" />
