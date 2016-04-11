@@ -42,7 +42,7 @@ namespace OpenARLog
         // Types
         private TypeDataDb _dataTypesDb;
 
-        private Bands _bandsdb;
+        private BandsManager _bandsdb;
 
         public List<BandModel> Bands { get { return _bands; } }
         public List<BandModel> _bands;
@@ -58,7 +58,7 @@ namespace OpenARLog
 
             _dataTypesDb = new TypeDataDb();
 
-            _bandsdb = new Bands(_dataTypesDb);
+            _bandsdb = new BandsManager(_dataTypesDb);
             _bandsdb.LoadAndUpdate();
             _bands = _bandsdb.HamBands;
            

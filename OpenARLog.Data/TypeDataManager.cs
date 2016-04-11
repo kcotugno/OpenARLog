@@ -13,14 +13,14 @@ using System.Data;
 
 namespace OpenARLog.Data
 {
-    public abstract class TypeData
+    public abstract class TypeDataManager
     {
         protected DataTable _dataTable;
         protected Constants.TYPES _type { get; set; }
 
         private TypeDataDb _typeDataDb;
 
-        public TypeData(TypeDataDb db, Constants.TYPES type)
+        public TypeDataManager(TypeDataDb db, Constants.TYPES type)
         {
             _typeDataDb = db;
             _type = type;

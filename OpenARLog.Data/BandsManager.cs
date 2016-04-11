@@ -14,7 +14,7 @@ using System.Data;
 
 namespace OpenARLog.Data
 {
-    public class Bands : TypeData
+    public class BandsManager : TypeDataManager
     {
         // Varibles cannot have a number as the first character. So we reverse the meter position.
         public enum BANDS
@@ -56,7 +56,7 @@ namespace OpenARLog.Data
 
         private List<BandModel> _HamBands;
 
-        public Bands(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
+        public BandsManager(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
         {
             // Do Nothing
         }
