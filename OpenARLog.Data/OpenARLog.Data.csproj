@@ -69,6 +69,8 @@
     <Compile Include="BandModel.cs" />
     <Compile Include="BandsManager.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="CountriesManager.cs" />
+    <Compile Include="CountryModel.cs" />
     <Compile Include="TypeDataDb.cs" />
     <Compile Include="QSO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -43,9 +43,13 @@ namespace OpenARLog
         private TypeDataDb _dataTypesDb;
 
         private BandsManager _bandsdb;
+        private CountriesManager _countriesMng;
 
         public List<BandModel> Bands { get { return _bands; } }
         public List<BandModel> _bands;
+
+        public List<CountryModel> Countries { get { return _countries; } }
+        private List<CountryModel> _countries;
 
         public MainWindow()
         {
@@ -61,7 +65,10 @@ namespace OpenARLog
             _bandsdb = new BandsManager(_dataTypesDb);
             _bandsdb.LoadAndUpdate();
             _bands = _bandsdb.HamBands;
-           
+
+            _countriesMng = new CountriesManager(_dataTypesDb);
+            _countriesMng.LoadAndUpdate();
+            _countries = _countriesMng.Countries;
 
             DataContext = this;
 

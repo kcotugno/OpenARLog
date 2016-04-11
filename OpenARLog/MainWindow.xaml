@@ -44,7 +44,7 @@
                             <Label Content="Name"/>
                             <TextBox Name="nameTxt" TextWrapping="Wrap" TabIndex="1"/>
                             <Label Content="Country"/>
-                            <ComboBox Name="countryTxt" TabIndex="2"/>
+                            <ComboBox Name="countryTxt" ItemsSource="{Binding Countries}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" TabIndex="2"/>
                             <Label Content="State"/>
                             <ComboBox Name="stateTxt" TabIndex="3"/>
                             <Label Content="City"/>

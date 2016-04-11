@@ -26,7 +26,7 @@ namespace OpenARLog.Data
             _type = type;
         }
 
-        public void Load()
+        public virtual void Load()
         {
             _dataTable = _typeDataDb.GetTable(_type);
         }
