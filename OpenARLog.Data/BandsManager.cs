@@ -16,42 +16,6 @@ namespace OpenARLog.Data
 {
     public class BandsManager : TypeDataManager
     {
-        // Varibles cannot have a number as the first character. So we reverse the meter position.
-        public enum BANDS
-        {
-            NONE = 0,
-            M2190,
-            M630,
-            M560,
-            M160,
-            M80,
-            M60,
-            M40,
-            M30,
-            M20,
-            M17,
-            M15,
-            M12,
-            M10,
-            M6,
-            M4,
-            M2,
-            M1_25,
-            CM70,
-            CM33,
-            CM23,
-            CM13,
-            CM9,
-            CM6,
-            CM3,
-            CM1_25,
-            MM6,
-            MM4,
-            MM2_5,
-            MM2,
-            MM1
-        };
-
         public List<BandModel> Bands { get { return _bands; } }
 
         private List<BandModel> _bands;
