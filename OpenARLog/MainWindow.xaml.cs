@@ -74,6 +74,9 @@ namespace OpenARLog
 
             InitializeComponent();
 
+            // Make UX better
+            callsignTxt.Focus();
+
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
             extraQSLGroup.Visibility = Visibility.Collapsed;
