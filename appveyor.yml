@@ -1,0 +1,10 @@
+version: 0.0.{build}
+configuration: Release
+platform: Any CPU
+before_build:
+- cmd: nuget restore
+build:
+  project: OpenARLog.sln
+  verbosity: minimal
+test: off
+deploy: off
