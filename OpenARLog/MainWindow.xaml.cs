@@ -46,7 +46,7 @@ namespace OpenARLog
         private CountriesManager _countriesMng;
 
         public List<BandModel> Bands { get { return _bands; } }
-        public List<BandModel> _bands;
+        private List<BandModel> _bands;
 
         public List<CountryModel> Countries { get { return _countries; } }
         private List<CountryModel> _countries;
