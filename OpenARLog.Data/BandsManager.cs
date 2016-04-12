@@ -52,9 +52,9 @@ namespace OpenARLog.Data
             MM1
         };
 
-        public List<BandModel> HamBands { get { return _HamBands; } }
+        public List<BandModel> Bands { get { return _bands; } }
 
-        private List<BandModel> _HamBands;
+        private List<BandModel> _bands;
 
         public BandsManager(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
         {
@@ -63,10 +63,10 @@ namespace OpenARLog.Data
 
         public override void PopulateList()
         {
-            if (_HamBands == null)
-                _HamBands = new List<BandModel>();
+            if (_bands == null)
+                _bands = new List<BandModel>();
 
-            _HamBands.Clear();
+            _bands.Clear();
 
             foreach (DataRow row in _dataTable.Rows)
             {
@@ -77,7 +77,7 @@ namespace OpenARLog.Data
                     UpperFrequency = row.Field<double?>("Upper_Freq_MHz")
                 };
 
-                _HamBands.Add(band);
+                _bands.Add(band);
             }
         }
 

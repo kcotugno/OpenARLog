@@ -64,7 +64,7 @@ namespace OpenARLog
 
             _bandsdb = new BandsManager(_dataTypesDb);
             _bandsdb.LoadAndUpdate();
-            _bands = _bandsdb.HamBands;
+            _bands = _bandsdb.Bands;
 
             _countriesMng = new CountriesManager(_dataTypesDb);
             _countriesMng.LoadAndUpdate();
