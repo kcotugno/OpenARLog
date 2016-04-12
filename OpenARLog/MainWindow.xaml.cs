@@ -167,9 +167,9 @@ namespace OpenARLog
             _qsoLog.InsertQSO(contact);
         }
 
-        private void ResetBtnBlick(object sender, RoutedEventArgs e)
+        private void ClearBtnBlick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            ClearUIFields();
         }
 
         private void CallsignTxtChanged(object sender, RoutedEventArgs e)
@@ -216,6 +216,37 @@ namespace OpenARLog
         #endregion
 
         #region Helper Functions
+
+        #region UI
+
+        private void ClearUIFields()
+        {
+            callsignTxt.Text = string.Empty;
+            nameTxt.Text = string.Empty;
+            countryTxt.SelectedIndex = -1;
+            stateTxt.SelectedIndex = -1;
+            cityTxt.Text = string.Empty;
+            gridSquareTxt.Text = string.Empty;
+
+            ageTxt.Text = string.Empty;
+            countryTxt.Text = string.Empty;
+            distTxt.Text = string.Empty;
+            emailTxt.Text = string.Empty;
+
+            bandTxt.SelectedIndex = -1;
+            frequencyTxt.Text = string.Empty;
+            modeTxt.SelectedIndex = -1;
+
+            timeOnTxt.Text = string.Empty;
+            dateOnTxt.Text = string.Empty;
+            timeOffTxt.Text = string.Empty;
+            dateOffTxt.Text = string.Empty;
+
+            qslRecTxt.SelectedIndex = -1;
+            qslSentTxt.SelectedIndex = -1;
+        }
+
+        #endregion
 
         private bool IsValidDateOrTime(string check, char delimiter)
         {
