@@ -74,7 +74,7 @@
                             <Label Content="Frequency" />
                             <TextBox Name="frequencyTxt" TextWrapping="Wrap" TabIndex="8" />
                             <Label Content="Mode" />
-                            <ComboBox Name="modeTxt" TabIndex="9" />
+                            <ComboBox Name="modeTxt" ItemsSource="{Binding Modes}" DisplayMemberPath="Mode" SelectedValuePath="Mode" SelectedValue="Mode" TabIndex="9" />
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Date and Time Info"  VerticalAlignment="Top" Margin="10,0,0,0" >
