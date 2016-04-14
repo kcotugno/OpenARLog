@@ -100,6 +100,9 @@ namespace OpenARLog
             Properties.Settings.Default.WindowWidth = Width;
             Properties.Settings.Default.WindowHeigth = Height;
             Properties.Settings.Default.IsWindowMaximized = WindowState == WindowState.Maximized ? true : false;
+
+            Properties.Settings.Default.LogPath = _qsoLog.LogPath;
+
             Properties.Settings.Default.Save();
         }
 
