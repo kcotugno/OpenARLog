@@ -18,7 +18,7 @@ namespace OpenARLog.Data
         protected DataTable _dataTable;
         protected Constants.TYPES _type { get; set; }
 
-        private TypeDataDb _typeDataDb;
+        protected TypeDataDb _typeDataDb;
 
         public TypeDataManager(TypeDataDb db, Constants.TYPES type)
         {

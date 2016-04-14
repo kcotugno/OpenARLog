@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:OpenARLog"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Data="clr-namespace:OpenARLog.Data;assembly=OpenARLog.Data" mc:Ignorable="d"
         x:Class="OpenARLog.MainWindow"
-        Title="OpenARLog" Height="768" Width="1024" MinWidth="800" MinHeight="600" Closed="WindowClosed" >
+        Title="OpenARLog" Width="1024" Height="768" MinWidth="1024" MinHeight="768" Closed="WindowClosed" 
+        Closing="MainWindowClosing">
     <Grid Margin="0,0,0,0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -29,8 +30,8 @@
                 <MenuItem Header="About" Click="AboutMenuClick"/>
             </MenuItem>
         </Menu>
-        <DataGrid Name="QSOs" Grid.Column="0" Margin="10,25,10.333,9" UseLayoutRounding="True" Grid.RowSpan="2" />
-        <ScrollViewer Grid.Column="1" Grid.Row="0" Margin="10,25,10,10" VerticalScrollBarVisibility="Auto" >
+        <DataGrid Name="qsoGrid" Grid.Column="0" Margin="10,25,10.333,9" UseLayoutRounding="True" Grid.RowSpan="2" IsReadOnly="True" HeadersVisibility="Column" />
+        <ScrollViewer Grid.Column="1" Grid.Row="0" Margin="10,25,10,10" VerticalScrollBarVisibility="Auto" KeyDown="InfoKeyDown" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -74,7 +75,7 @@
                             <Label Content="Frequency" />
                             <TextBox Name="frequencyTxt" TextWrapping="Wrap" TabIndex="8" />
                             <Label Content="Mode" />
-                            <ComboBox Name="modeTxt" TabIndex="9" />
+                            <ComboBox Name="modeTxt" ItemsSource="{Binding Modes}" DisplayMemberPath="Mode" SelectedValuePath="Mode" SelectedValue="Mode" TabIndex="9" />
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Date and Time Info"  VerticalAlignment="Top" Margin="10,0,0,0" >
@@ -105,6 +106,6 @@
         </GroupBox>
         <Button Name="showBtn" Grid.Column="1" Grid.Row="1" Margin="10,0,0,10" HorizontalAlignment="Left" Height="22" VerticalAlignment="Bottom" Click="ShowBtnClick" Width="75" Content="More"/>
         <Button Name="logBtn" Grid.Column="1" Grid.Row="1" Margin="0,0,90,10" HorizontalAlignment="Right" Width="75" Height="22" VerticalAlignment="Bottom" Click="LogBtnClick" Content="Log"/>
-        <Button Name="clearBtn" Grid.Column="1" Grid.Row="1" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="ResetBtnBlick" Content="Clear"/>
+        <Button Name="clearBtn" Grid.Column="1" Grid.Row="1" Margin="0,0,10,10" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="ClearBtnBlick" Content="Clear"/>
     </Grid>
 </Window>

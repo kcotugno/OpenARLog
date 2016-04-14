@@ -24,6 +24,7 @@ namespace OpenARLog
     public partial class MainWindow : Window
     {
         private QSOLog _qsoLog;
+        public List<QSO> QSOs { get { return _qsos; } }
         private List<QSO> _qsos;
 
         private bool uiVisible = false;
@@ -32,10 +33,14 @@ namespace OpenARLog
         private TypeDataDb _dataTypesDb;
 
         private BandsManager _bandsdb;
+        private ModesManager _modesManager;
         private CountriesManager _countriesMng;
 
         public List<BandModel> Bands { get { return _bands; } }
-        public List<BandModel> _bands;
+        private List<BandModel> _bands;
+
+        public List<ModeModel> Modes { get { return _modes; } }
+        private List<ModeModel> _modes;
 
         public List<CountryModel> Countries { get { return _countries; } }
         private List<CountryModel> _countries;
@@ -53,7 +58,11 @@ namespace OpenARLog
 
             _bandsdb = new BandsManager(_dataTypesDb);
             _bandsdb.LoadAndUpdate();
-            _bands = _bandsdb.HamBands;
+            _bands = _bandsdb.Bands;
+
+            _modesManager = new ModesManager(_dataTypesDb);
+            _modesManager.LoadAndUpdate();
+            _modes = _modesManager.Modes;
 
             _countriesMng = new CountriesManager(_dataTypesDb);
             _countriesMng.LoadAndUpdate();
@@ -63,9 +72,31 @@ namespace OpenARLog
 
             InitializeComponent();
 
+            qsoGrid.DataContext = _qsoLog;
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            // Restore window settings
+            Width = Properties.Settings.Default.WindowWidth;
+            Height = Properties.Settings.Default.WindowHeigth;
+            WindowState = Properties.Settings.Default.IsWindowMaximized == true ? WindowState.Maximized : WindowState.Normal;
+
+            // Make UX better
+            callsignTxt.Focus();
+
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
             extraQSLGroup.Visibility = Visibility.Collapsed;
+        }
+
+        private void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.WindowWidth = Width;
+            Properties.Settings.Default.WindowHeigth = Height;
+            Properties.Settings.Default.IsWindowMaximized = WindowState == WindowState.Maximized ? true : false;
+
+            Properties.Settings.Default.LogPath = _qsoLog.LogPath;
+
+            Properties.Settings.Default.Save();
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -108,6 +139,13 @@ namespace OpenARLog
         #endregion
 
         #region Main Ui Events
+
+        private void InfoKeyDown(object sender, RoutedEventArgs e)
+        {
+            KeyEventArgs key = (KeyEventArgs)e;
+            if (key.Key == Key.Enter)
+                LogBtnClick(sender, e);
+        }
 
         private void ShowBtnClick(object sender, RoutedEventArgs e)
         {
@@ -154,11 +192,13 @@ namespace OpenARLog
             };
 
             _qsoLog.InsertQSO(contact);
+            qsoGrid.Items.Refresh();
+            ClearUIFields();
         }
 
-        private void ResetBtnBlick(object sender, RoutedEventArgs e)
+        private void ClearBtnBlick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            ClearUIFields();
         }
 
         private void CallsignTxtChanged(object sender, RoutedEventArgs e)
@@ -205,6 +245,39 @@ namespace OpenARLog
         #endregion
 
         #region Helper Functions
+
+        #region UI
+
+        private void ClearUIFields()
+        {
+            callsignTxt.Text = string.Empty;
+            nameTxt.Text = string.Empty;
+            countryTxt.SelectedIndex = -1;
+            stateTxt.SelectedIndex = -1;
+            cityTxt.Text = string.Empty;
+            gridSquareTxt.Text = string.Empty;
+
+            ageTxt.Text = string.Empty;
+            countryTxt.Text = string.Empty;
+            distTxt.Text = string.Empty;
+            emailTxt.Text = string.Empty;
+
+            bandTxt.SelectedIndex = -1;
+            frequencyTxt.Text = string.Empty;
+            modeTxt.SelectedIndex = -1;
+
+            timeOnTxt.Text = string.Empty;
+            dateOnTxt.Text = string.Empty;
+            timeOffTxt.Text = string.Empty;
+            dateOffTxt.Text = string.Empty;
+
+            qslRecTxt.SelectedIndex = -1;
+            qslSentTxt.SelectedIndex = -1;
+
+            callsignTxt.Focus();
+        }
+
+        #endregion
 
         private bool IsValidDateOrTime(string check, char delimiter)
         {
@@ -282,5 +355,6 @@ namespace OpenARLog
         }
 
         #endregion
+
     }
 }

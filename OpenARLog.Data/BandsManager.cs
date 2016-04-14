@@ -16,45 +16,9 @@ namespace OpenARLog.Data
 {
     public class BandsManager : TypeDataManager
     {
-        // Varibles cannot have a number as the first character. So we reverse the meter position.
-        public enum BANDS
-        {
-            NONE = 0,
-            M2190,
-            M630,
-            M560,
-            M160,
-            M80,
-            M60,
-            M40,
-            M30,
-            M20,
-            M17,
-            M15,
-            M12,
-            M10,
-            M6,
-            M4,
-            M2,
-            M1_25,
-            CM70,
-            CM33,
-            CM23,
-            CM13,
-            CM9,
-            CM6,
-            CM3,
-            CM1_25,
-            MM6,
-            MM4,
-            MM2_5,
-            MM2,
-            MM1
-        };
+        public List<BandModel> Bands { get { return _bands; } }
 
-        public List<BandModel> HamBands { get { return _HamBands; } }
-
-        private List<BandModel> _HamBands;
+        private List<BandModel> _bands;
 
         public BandsManager(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
         {
@@ -63,10 +27,10 @@ namespace OpenARLog.Data
 
         public override void PopulateList()
         {
-            if (_HamBands == null)
-                _HamBands = new List<BandModel>();
+            if (_bands == null)
+                _bands = new List<BandModel>();
 
-            _HamBands.Clear();
+            _bands.Clear();
 
             foreach (DataRow row in _dataTable.Rows)
             {
@@ -77,7 +41,7 @@ namespace OpenARLog.Data
                     UpperFrequency = row.Field<double?>("Upper_Freq_MHz")
                 };
 
-                _HamBands.Add(band);
+                _bands.Add(band);
             }
         }
 

@@ -16,10 +16,12 @@ namespace OpenARLog.Data
         public enum TYPES
         {
             BANDS = 0,
-            COUNTRIES
+            COUNTRIES,
+            MODES,
+            SUBMODES
         };
 
-        private static string[] _types = { "Bands", "Country_Codes_and_Names" };
+        private static string[] _types = { "Bands", "Country_Codes_and_Names", "Modes", "Submodes" };
 
         public enum INDEX
         {

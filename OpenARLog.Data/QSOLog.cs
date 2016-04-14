@@ -10,18 +10,21 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 
 namespace OpenARLog.Data
 {
-    public class QSOLog : IDisposable
+    public class QSOLog : IDisposable, IEnumerable<QSO>
     {
 
         #region Private Members
 
         private static string SQLITE_VERSION = "3";
+
+        public List<QSO> QSOs;
 
         public string LogName { get { return _dbPath; } }
         public string LogPath { get { return _dbPath; } }
@@ -38,6 +41,16 @@ namespace OpenARLog.Data
         public void Dispose()
         {
             _qsoLogConnection.Dispose();
+        }
+
+        public IEnumerator<QSO> GetEnumerator()
+        {
+            return QSOs.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return QSOs.GetEnumerator();
         }
 
         #endregion
@@ -63,6 +76,8 @@ namespace OpenARLog.Data
 
             if (IsDatabase() == false)
                 ResetDbFile();
+
+            QSOs = new List<QSO>();
 
         }
 
@@ -291,6 +306,8 @@ namespace OpenARLog.Data
 
                 sqliteCmd.Dispose();
             }
+
+            QSOs.Add(qso);
         }
 
         #endregion
