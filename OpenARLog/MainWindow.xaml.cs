@@ -35,6 +35,7 @@ namespace OpenARLog
     public partial class MainWindow : Window
     {
         private QSOLog _qsoLog;
+        public List<QSO> QSOs { get { return _qsos; } }
         private List<QSO> _qsos;
 
         private bool uiVisible = false;
@@ -81,6 +82,9 @@ namespace OpenARLog
             DataContext = this;
 
             InitializeComponent();
+
+            qsoGrid.DataContext = _qsoLog;
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             // Restore window settings
             Width = Properties.Settings.Default.WindowWidth;
@@ -199,7 +203,7 @@ namespace OpenARLog
             };
 
             _qsoLog.InsertQSO(contact);
-
+            qsoGrid.Items.Refresh();
             ClearUIFields();
         }
 
