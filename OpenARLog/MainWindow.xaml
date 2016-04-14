@@ -4,7 +4,8 @@
         xmlns:local="clr-namespace:OpenARLog"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Data="clr-namespace:OpenARLog.Data;assembly=OpenARLog.Data" mc:Ignorable="d"
         x:Class="OpenARLog.MainWindow"
-        Title="OpenARLog" Height="768" Width="1024" MinWidth="800" MinHeight="600" Closed="WindowClosed" >
+        Title="OpenARLog" Width="1024" Height="768" MinWidth="1024" MinHeight="768" Closed="WindowClosed" 
+        Closing="MainWindowClosing">
     <Grid Margin="0,0,0,0" >
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>

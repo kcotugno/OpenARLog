@@ -82,12 +82,25 @@ namespace OpenARLog
 
             InitializeComponent();
 
+            // Restore window settings
+            Width = Properties.Settings.Default.WindowWidth;
+            Height = Properties.Settings.Default.WindowHeigth;
+            WindowState = Properties.Settings.Default.IsWindowMaximized == true ? WindowState.Maximized : WindowState.Normal;
+
             // Make UX better
             callsignTxt.Focus();
 
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
             extraQSLGroup.Visibility = Visibility.Collapsed;
+        }
+
+        private void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.WindowWidth = Width;
+            Properties.Settings.Default.WindowHeigth = Height;
+            Properties.Settings.Default.IsWindowMaximized = WindowState == WindowState.Maximized ? true : false;
+            Properties.Settings.Default.Save();
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -335,5 +348,6 @@ namespace OpenARLog
         }
 
         #endregion
+
     }
 }
