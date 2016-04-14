@@ -147,6 +147,13 @@ namespace OpenARLog
 
         #region Main Ui Events
 
+        private void InfoKeyDown(object sender, RoutedEventArgs e)
+        {
+            KeyEventArgs key = (KeyEventArgs)e;
+            if (key.Key == Key.Enter)
+                LogBtnClick(sender, e);
+        }
+
         private void ShowBtnClick(object sender, RoutedEventArgs e)
         {
             if (uiVisible == true)
@@ -192,6 +199,8 @@ namespace OpenARLog
             };
 
             _qsoLog.InsertQSO(contact);
+
+            ClearUIFields();
         }
 
         private void ClearBtnBlick(object sender, RoutedEventArgs e)
@@ -271,6 +280,8 @@ namespace OpenARLog
 
             qslRecTxt.SelectedIndex = -1;
             qslSentTxt.SelectedIndex = -1;
+
+            callsignTxt.Focus();
         }
 
         #endregion
