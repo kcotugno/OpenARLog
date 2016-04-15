@@ -3,6 +3,8 @@ Open source Amateur Radio logging Application for Windows.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pby7cme7v0t98a96?svg=true)](https://ci.appveyor.com/project/kcotugno/openarlog)
 
+# Overview
+
 Work is done in my spare time while attending school. Thus it is coming slowly but surely. I am
 aiming for an alpha relase this summer. C# and the .Net Framework are new to me so the code will
 be cleaned over time as I learn more. Feel free to send a Pull-Request if you wish to contribute.
