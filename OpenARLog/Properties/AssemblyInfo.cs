@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenARLog")]
-[assembly: AssemblyCopyright("Copyright © 2015 kcotugno")]
+[assembly: AssemblyCopyright("Copyright © 2015-2016 kcotugno")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
