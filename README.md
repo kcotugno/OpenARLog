@@ -23,11 +23,9 @@ These are still in their early development. The UI is unusable, Data is only par
 Work will be focused on finishing the back end before the UI will be completed.
 
 #Dependencies
-EntityFramework
-
 System.Data.SQLite
 
-Get both from VS NuGet Package Manager.
+Get from VS NuGet Package Manager.
 
 #Building
 Just open the solution in Visual Studio, build and run.
