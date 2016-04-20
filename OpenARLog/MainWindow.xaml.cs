@@ -49,7 +49,7 @@ namespace OpenARLog
 
             _qsoLog = new QSOLog();
             // TODO Add support for a log from other locations, loaded from preferences.
-            _qsoLog.OpenConnection("OARLCallLog.s3db");
+            _qsoLog.OpenConnection(Properties.Settings.Default.LogPath);
 
             _dataTypesDb = new TypeDataDb();
 
