@@ -88,7 +88,7 @@ namespace OpenARLog.ADIF
 
         public List<QSO> Read()
         {
-            List<QSO> contacts;
+            List<QSO> contacts = new List<QSO>();
 
             if (!_streamer.EndOfStream)
             {
@@ -101,7 +101,7 @@ namespace OpenARLog.ADIF
             //_headerFields.ForEach(x => Console.WriteLine(x._header.name + ":" + x._header.length + ":" + x._header.type + ":" + x._data));
             //_qsoFields.ForEach(x => Console.WriteLine(x._header.name + ":" + x._header.length + ":" + x._header.type + ":" + x._data));
 
-            return null;
+            return contacts;
         }
 
         #endregion
