@@ -16,9 +16,7 @@ namespace OpenARLog.Data
 {
     public class BandsManager : TypeDataManager
     {
-        public List<BandModel> Bands { get { return _bands; } }
-
-        private List<BandModel> _bands;
+        public List<BandModel> Bands { get; protected set; }
 
         public BandsManager(TypeDataDb db) : base(db, Constants.TYPES.BANDS)
         {
@@ -27,10 +25,10 @@ namespace OpenARLog.Data
 
         public override void PopulateList()
         {
-            if (_bands == null)
-                _bands = new List<BandModel>();
+            if (Bands == null)
+                Bands = new List<BandModel>();
 
-            _bands.Clear();
+            Bands.Clear();
 
             foreach (DataRow row in _dataTable.Rows)
             {
@@ -41,7 +39,7 @@ namespace OpenARLog.Data
                     UpperFrequency = row.Field<double?>("Upper_Freq_MHz")
                 };
 
-                _bands.Add(band);
+                Bands.Add(band);
             }
         }
 

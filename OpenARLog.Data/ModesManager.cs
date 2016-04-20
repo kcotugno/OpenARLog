@@ -16,10 +16,9 @@ namespace OpenARLog.Data
 {
     public class ModesManager : TypeDataManager
     {
-        public List<ModeModel> Modes { get { return _modes; } }
+        public List<ModeModel> Modes { get; protected set; }
         public bool IncludeDeprecated { get; set; } = false;
 
-        private List<ModeModel> _modes = null;
         private DataTable _submodes;
 
         public ModesManager(TypeDataDb db) : base(db, Constants.TYPES.MODES)
@@ -36,10 +35,10 @@ namespace OpenARLog.Data
 
         public override void PopulateList()
         {
-            if (_modes == null)
-                _modes = new List<ModeModel>();
+            if (Modes == null)
+                Modes = new List<ModeModel>();
 
-            _modes.Clear();
+            Modes.Clear();
 
             foreach (DataRow row in _dataTable.Rows)
             {
@@ -51,7 +50,7 @@ namespace OpenARLog.Data
                 };
 
                 if(mode.IsDeprecated == false || IncludeDeprecated == true)
-                    _modes.Add(mode);
+                    Modes.Add(mode);
             }
 
             foreach (DataRow row in _submodes.Rows)
@@ -63,9 +62,9 @@ namespace OpenARLog.Data
                 };
 
                 // This is outside since I cannot reference submode.Mode inside the initializer.
-                submode.ParentMode = _modes.Find(mode => mode.Mode == submode.Mode);
+                submode.ParentMode = Modes.Find(mode => mode.Mode == submode.Mode);
 
-                _modes.Add(submode);
+                Modes.Add(submode);
             }
         }
     }

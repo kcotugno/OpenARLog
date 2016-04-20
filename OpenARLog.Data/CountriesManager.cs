@@ -17,11 +17,9 @@ namespace OpenARLog.Data
 {
     public class CountriesManager : TypeDataManager
     {
-        public List<CountryModel> Countries { get { return _countries; } }
+        public List<CountryModel> Countries { get; protected set; }
 
         public bool IncludeDeleted { get; set; } = false;
-
-        private List<CountryModel> _countries;
 
         public CountriesManager(TypeDataDb db) : base(db, Constants.TYPES.COUNTRIES)
         {
@@ -30,10 +28,10 @@ namespace OpenARLog.Data
 
         public override void PopulateList()
         {
-            if (_countries == null)
-                _countries = new List<CountryModel>();
+            if (Countries == null)
+                Countries = new List<CountryModel>();
 
-            _countries.Clear();
+            Countries.Clear();
 
             foreach(DataRow row in _dataTable.Select(null, "Entity_Name", DataViewRowState.CurrentRows))
             {
@@ -45,7 +43,7 @@ namespace OpenARLog.Data
                 };
 
                 if (country.Deleted == false || IncludeDeleted == true)
-                    _countries.Add(country);
+                    Countries.Add(country);
             }
         }
     }
