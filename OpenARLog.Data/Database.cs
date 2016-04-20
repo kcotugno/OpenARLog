@@ -81,11 +81,15 @@ namespace OpenARLog.Data
         {
             _dbConnection.Close();
 
-            System.IO.File.WriteAllText(Path, string.Empty);
+            // Because closing the connection doesn't close the file
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            System.IO.File.WriteAllBytes(Path, new byte[0]);
 
             _dbConnection.Open();
 
-            SQLiteCommand sqliteCmd = new SQLiteCommand(createdb);
+            SQLiteCommand sqliteCmd = new SQLiteCommand(createdb, _dbConnection);
 
             try
             {
@@ -93,7 +97,7 @@ namespace OpenARLog.Data
             }
             catch
             {
-
+                // Do nothing
             }
 
             sqliteCmd.Dispose();
@@ -115,11 +119,13 @@ namespace OpenARLog.Data
             {
                 data = sqliteCmd.ExecuteReader();
 
-                hasTable = data.HasRows;
+                data.Read();
+                if (data.GetInt64(0) != 0)
+                    hasTable = true;
             }
             catch
             {
-                return hasTable;
+                // return false
             }
 
             return hasTable;

@@ -71,6 +71,9 @@ namespace OpenARLog.Data
         {
             _qsoTable = GetDataFromTableInOrder(Constants.LOG_TABLE_QSOS, Constants.INDEX.ID.ToString(), Constants.ORDER.DESC);
 
+            if (_qsoTable == null)
+                return;
+
             foreach(DataRow row in _qsoTable.Rows)
             {
                 QSOs.AddLast(new QSO
