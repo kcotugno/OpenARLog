@@ -41,6 +41,8 @@ namespace OpenARLog.Data
 
                 Bands.Add(band);
             }
+
+            _dataTable = null;
         }
 
         public bool IsValidBand(string text)

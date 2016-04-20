@@ -19,7 +19,7 @@ namespace OpenARLog.Data
         public List<ModeModel> Modes { get; protected set; }
         public bool IncludeDeprecated { get; set; } = false;
 
-        private DataTable _submodes;
+        private DataTable _submodesTable;
 
         public ModesManager(TypeDataDb db) : base(db, Constants.TYPES.MODES)
         {
@@ -30,7 +30,7 @@ namespace OpenARLog.Data
         {
             base.Load();
 
-            _submodes = _typeDataDb.GetTable(Constants.TYPES.SUBMODES);
+            _submodesTable = _typeDataDb.GetTable(Constants.TYPES.SUBMODES);
         }
 
         public override void PopulateList()
@@ -53,7 +53,7 @@ namespace OpenARLog.Data
                     Modes.Add(mode);
             }
 
-            foreach (DataRow row in _submodes.Rows)
+            foreach (DataRow row in _submodesTable.Rows)
             {
                 ModeModel submode = new ModeModel()
                 {
@@ -66,6 +66,9 @@ namespace OpenARLog.Data
 
                 Modes.Add(submode);
             }
+
+            _dataTable = null;
+            _submodesTable = null;
         }
     }
 }

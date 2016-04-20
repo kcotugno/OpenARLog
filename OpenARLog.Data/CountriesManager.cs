@@ -45,6 +45,8 @@ namespace OpenARLog.Data
                 if (country.Deleted == false || IncludeDeleted == true)
                     Countries.Add(country);
             }
+
+            _dataTable = null;
         }
     }
 }
