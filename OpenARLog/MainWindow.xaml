@@ -45,7 +45,7 @@
                             <Label Content="Name"/>
                             <TextBox Name="nameTxt" TextWrapping="Wrap" TabIndex="1"/>
                             <Label Content="Country"/>
-                            <ComboBox Name="countryTxt" ItemsSource="{Binding Countries}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" TabIndex="2"/>
+                            <ComboBox Name="countryTxt" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" TabIndex="2"/>
                             <Label Content="State"/>
                             <ComboBox Name="stateTxt" TabIndex="3"/>
                             <Label Content="City"/>
@@ -71,11 +71,11 @@
                     <GroupBox Header="Radio Info" VerticalAlignment="Top" Margin="10,0,0,0">
                         <StackPanel>
                             <Label Content="Band" />
-                            <ComboBox Name="bandTxt"  ItemsSource="{Binding Bands}" DisplayMemberPath="Band" SelectedValuePath="Band" SelectedValue="Band"  TabIndex="7" />
+                            <ComboBox Name="bandTxt" DisplayMemberPath="Band" SelectedValuePath="Band" SelectedValue="Band"  TabIndex="7" />
                             <Label Content="Frequency" />
                             <TextBox Name="frequencyTxt" TextWrapping="Wrap" TabIndex="8" />
                             <Label Content="Mode" />
-                            <ComboBox Name="modeTxt" ItemsSource="{Binding Modes}" DisplayMemberPath="Mode" SelectedValuePath="Mode" SelectedValue="Mode" TabIndex="9" />
+                            <ComboBox Name="modeTxt" DisplayMemberPath="Mode" SelectedValuePath="Mode" SelectedValue="Mode" TabIndex="9" />
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Date and Time Info"  VerticalAlignment="Top" Margin="10,0,0,0" >

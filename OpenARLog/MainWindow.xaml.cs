@@ -9,12 +9,15 @@
  * Date: 8/15/2015
  */
 
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 using OpenARLog.Data;
+using OpenARLog.ADIF;
 
 namespace OpenARLog
 {
@@ -29,48 +32,17 @@ namespace OpenARLog
         private bool uiVisible = false;
 
         // Types
-        private TypeDataDb _dataTypesDb;
+        private TypeDataDb _typeDataDb;
 
-        private BandsManager _bandsdb;
+        private BandsManager _bandsManager;
         private ModesManager _modesManager;
-        private CountriesManager _countriesMng;
+        private CountriesManager _countriesManager;
 
-        public List<BandModel> Bands { get { return _bands; } }
-        private List<BandModel> _bands;
-
-        public List<ModeModel> Modes { get { return _modes; } }
-        private List<ModeModel> _modes;
-
-        public List<CountryModel> Countries { get { return _countries; } }
-        private List<CountryModel> _countries;
+        #region Initialization Methods
 
         public MainWindow()
         {
-
-            _qsoLog = new QSOLog();
-            // TODO Add support for a log from other locations, loaded from preferences.
-            _qsoLog.OpenConnection("OARLCallLog.s3db");
-
-            _dataTypesDb = new TypeDataDb();
-
-            _bandsdb = new BandsManager(_dataTypesDb);
-            _bandsdb.LoadAndUpdate();
-            _bands = _bandsdb.Bands;
-
-            _modesManager = new ModesManager(_dataTypesDb);
-            _modesManager.LoadAndUpdate();
-            _modes = _modesManager.Modes;
-
-            _countriesMng = new CountriesManager(_dataTypesDb);
-            _countriesMng.LoadAndUpdate();
-            _countries = _countriesMng.Countries;
-
-            DataContext = this;
-
             InitializeComponent();
-
-            qsoGrid.DataContext = _qsoLog;
-            qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             // Restore window settings
             Width = Properties.Settings.Default.WindowWidth;
@@ -83,7 +55,34 @@ namespace OpenARLog
             // Hide extra entry fields.
             moreContGroup.Visibility = Visibility.Collapsed;
             extraQSLGroup.Visibility = Visibility.Collapsed;
+
+            InitializeDataBinding();
         }
+
+        private void InitializeDataBinding()
+        {
+            // Log data
+            _qsoLog = new QSOLog(Properties.Settings.Default.LogPath);
+
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            // Type data
+            _typeDataDb = new TypeDataDb();
+
+            _bandsManager = new BandsManager(_typeDataDb);
+            _modesManager = new ModesManager(_typeDataDb);
+            _countriesManager = new CountriesManager(_typeDataDb);
+
+            _bandsManager.LoadAndUpdate();
+            _modesManager.LoadAndUpdate();
+            _countriesManager.LoadAndUpdate();
+
+            bandTxt.ItemsSource = _bandsManager.Bands;
+            modeTxt.ItemsSource = _modesManager.Modes;
+            countryTxt.ItemsSource = _countriesManager.Countries;
+        }
+
+        #endregion
 
         private void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -101,27 +100,53 @@ namespace OpenARLog
             _qsoLog.Close();
             _qsoLog.Dispose();
         }
-        
+
         #region Menu Click Handlers
-        
+
         private void NewDBMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            SaveFileDialog saveNewLogDialog = new SaveFileDialog();
+
+            saveNewLogDialog.FileName = Constants.NEW_LOG_FILE_NAME;
+            saveNewLogDialog.Filter = Constants.LOG_FILE_EXTENSION;
+            saveNewLogDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (saveNewLogDialog.ShowDialog() == true)
+                SaveNewLogFile(saveNewLogDialog.FileName);
         }
 
         private void OpenDBMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            OpenFileDialog openLogDialog = new OpenFileDialog();
+
+            openLogDialog.Filter = Constants.LOG_FILE_EXTENSION;
+            openLogDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (openLogDialog.ShowDialog() == true)
+                OpenLogFile(openLogDialog.FileName);
         }
 
         private void ImportADIFMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            OpenFileDialog importADIFDialog = new OpenFileDialog();
+
+            importADIFDialog.Filter = Constants.ADIF_FILE_EXTENSION;
+            importADIFDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (importADIFDialog.ShowDialog() == true)
+                ImportADIFile(importADIFDialog.FileName);
         }
 
         private void ExportADIFMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            SaveFileDialog exportADIFDialog = new SaveFileDialog();
+
+            exportADIFDialog.FileName = Constants.NEW_ADIF_FILE_NAME;
+            exportADIFDialog.Filter = Constants.ADIF_FILE_EXTENSION;
+            exportADIFDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (exportADIFDialog.ShowDialog() == true)
+                ExportADIFile(exportADIFDialog.FileName);
         }
 
         private void AboutMenuClick(object sender, RoutedEventArgs e)
@@ -349,6 +374,76 @@ namespace OpenARLog
 
 
             return datetime;
+        }
+
+        private void SaveNewLogFile(string path)
+        {
+            if (File.Exists(path))
+                File.WriteAllBytes(path, new byte[0]);
+
+            _qsoLog.Close();
+            _qsoLog.Dispose();
+
+            _qsoLog = new QSOLog(path);
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            Properties.Settings.Default.LogPath = path;
+        }
+
+        private void OpenLogFile(string path)
+        {
+            _qsoLog.Close();
+            _qsoLog.Dispose();
+
+            _qsoLog = new QSOLog(path);
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            Properties.Settings.Default.LogPath = path;
+        }
+
+        private void ImportADIFile(string path)
+        {
+            ADIReader reader = new ADIReader(path);
+
+            List<QSO> imported = reader.Read();
+
+            // Record the number of records imported
+            int num = 0;
+
+            foreach(QSO x in imported)
+            {
+                _qsoLog.InsertQSO(x);
+                num++;
+            }
+
+            reader.Close();
+
+            qsoGrid.Items.Refresh();
+
+            MessageBox.Show(string.Format("Records imported: {0}", num), "ADIF Import", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExportADIFile(string path)
+        {
+            ADIWriter writer = new ADIWriter(path, false);
+            ADIFHeader header = new ADIFHeader();
+
+            // This should be counted by the writer.
+            int num = _qsoLog.QSOs.Count;
+
+            header.InitialComment = Constants.ADIF_HEADER_COMMENT;
+            header.ProgramId = Constants.APPLICATION_NAME;
+            header.TimeStamp = DateTime.Now;
+
+            writer.SetHeader(header);
+
+            writer.WriteHeader();
+
+            writer.WriteQSOLinkedList(_qsoLog.QSOs);
+
+            writer.Close();
+
+            MessageBox.Show(string.Format("Records exported: {0}", num), "ADIF Export", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         #endregion

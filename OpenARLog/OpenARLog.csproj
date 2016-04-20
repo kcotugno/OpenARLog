@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.cs" />
     <Compile Include="Settings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +105,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenARLog.ADIF\OpenARLog.ADIF.csproj">
+      <Project>{aa26227b-fb2b-4a71-ae75-98190c01b16b}</Project>
+      <Name>OpenARLog.ADIF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenARLog.Data\OpenARLog.Data.csproj">
       <Project>{8daf99ef-baa6-4301-9e7e-edae5e193bd8}</Project>
       <Name>OpenARLog.Data</Name>
