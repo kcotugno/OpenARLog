@@ -48,13 +48,25 @@ namespace OpenARLog.Data
             MY_GRIDSQUARE
         };
 
+        public enum ORDER
+        {
+            ASC = 0,
+            DESC
+        }
+
         public static string TYPE_DATA_DB_NAME = "type_data.s3db";
+
+        public static string LOG_TABLE_QSOS = "QSOs";
 
         #region SQLite Commands
 
         public static string DB_QUERY_GENERAL = "SELECT * FROM ";
 
-        public static string LOG_DB_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='QSOs'";
+        // Keep space for proper formating
+        public static string DB_ORDERBY = " ORDER BY ";
+
+        // Remember to add single quotes around the table name added.
+        public static string DB_TABLE_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=";
 
         public static string LOG_DB_CREATE_QSO_TABLE = "CREATE TABLE IF NOT EXISTS QSOs " +
                                                         "(ID INTEGER PRIMARY KEY NOT NULL, CALLSIGN TEXT NOT NULL, " +
@@ -75,6 +87,8 @@ namespace OpenARLog.Data
 
         // Query commands
         public static string LOG_DB_QUERY_GENERAL = "SELECT * FROM QSOs";
+
+        public static string LOG_DB_QUERY_GENERAL_ORDER_ID_DESC = "SELECT * FROM QSOs ORDER BY ID DESC";
 
         public static string LOG_DB_QUERY_ID = "SELECT * FROM QSOs WHERE ID = @id";
 

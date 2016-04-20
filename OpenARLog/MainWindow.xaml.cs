@@ -25,8 +25,6 @@ namespace OpenARLog
     public partial class MainWindow : Window
     {
         private QSOLog _qsoLog;
-        public List<QSO> QSOs { get { return _qsos; } }
-        private List<QSO> _qsos;
 
         private bool uiVisible = false;
 
@@ -51,9 +49,7 @@ namespace OpenARLog
 
             _qsoLog = new QSOLog();
             // TODO Add support for a log from other locations, loaded from preferences.
-            _qsoLog.OpenLog(Properties.Settings.Default.LogPath);
-
-            _qsos = new List<QSO>();
+            _qsoLog.OpenConnection("OARLCallLog.s3db");
 
             _dataTypesDb = new TypeDataDb();
 
@@ -95,14 +91,14 @@ namespace OpenARLog
             Properties.Settings.Default.WindowHeigth = Height;
             Properties.Settings.Default.IsWindowMaximized = WindowState == WindowState.Maximized ? true : false;
 
-            Properties.Settings.Default.LogPath = _qsoLog.LogPath;
+            Properties.Settings.Default.LogPath = _qsoLog.Path;
 
             Properties.Settings.Default.Save();
         }
 
         private void WindowClosed(object sender, EventArgs e)
         {
-            _qsoLog.CloseLog();
+            _qsoLog.Close();
             _qsoLog.Dispose();
         }
         

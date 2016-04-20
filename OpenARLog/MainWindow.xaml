@@ -30,7 +30,7 @@
                 <MenuItem Header="About" Click="AboutMenuClick"/>
             </MenuItem>
         </Menu>
-        <DataGrid Name="qsoGrid" Grid.Column="0" Margin="10,25,10.333,9" UseLayoutRounding="True" Grid.RowSpan="2" IsReadOnly="True" HeadersVisibility="Column" />
+        <DataGrid Name="qsoGrid" Grid.Column="0" Margin="10,25,10.333,9" UseLayoutRounding="True" Grid.RowSpan="2" IsReadOnly="True" HeadersVisibility="Column" SelectionUnit="FullRow" />
         <ScrollViewer Grid.Column="1" Grid.Row="0" Margin="10,25,10,10" VerticalScrollBarVisibility="Auto" KeyDown="InfoKeyDown" >
             <Grid>
                 <Grid.ColumnDefinitions>

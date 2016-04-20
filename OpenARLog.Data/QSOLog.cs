@@ -17,31 +17,16 @@ using System.Data.SQLite;
 
 namespace OpenARLog.Data
 {
-    public class QSOLog : IDisposable, IEnumerable<QSO>
+    public class QSOLog : Database, IEnumerable<QSO>
     {
 
-        #region Private Members
+        public LinkedList<QSO> QSOs { get; } = new LinkedList<QSO>();
 
-        private static string SQLITE_VERSION = "3";
+        public long NextRecord { get; private set; }
 
-        public List<QSO> QSOs;
+        private DataTable _qsoTable;
 
-        public string LogName { get { return _dbPath; } }
-        public string LogPath { get { return _dbPath; } }
-
-        private string _dbPath;
-        private string _connStr;
-
-        private SQLiteConnection _qsoLogConnection;
-
-        #endregion
-
-        #region Interface Implementations
-
-        public void Dispose()
-        {
-            _qsoLogConnection.Dispose();
-        }
+        #region Interface Implementation
 
         public IEnumerator<QSO> GetEnumerator()
         {
@@ -55,232 +40,78 @@ namespace OpenARLog.Data
 
         #endregion
 
-        #region Database File Management
-
-        public void OpenLog(string dbPath)
+        public QSOLog() : base()
         {
-            _dbPath = dbPath;
+            // Do nothing
+        }
 
-            _qsoLogConnection = new SQLiteConnection();
-
-            SQLiteConnectionStringBuilder connStrBuilder = new SQLiteConnectionStringBuilder();
-
-            connStrBuilder["Data Source"] = _dbPath;
-            connStrBuilder["Version"] = SQLITE_VERSION;
-
-            _connStr = connStrBuilder.ToString();
-
-            _qsoLogConnection.ConnectionString = _connStr;
-
-            _qsoLogConnection.Open();
-
-            if (IsDatabase() == false)
-                ResetDbFile();
-
-            QSOs = new List<QSO>();
+        public QSOLog(string path) : base(path)
+        {
 
         }
 
-        public void CloseLog()
+        public override void OpenConnection(string path)
         {
-            _qsoLogConnection.Close();
+            base.OpenConnection(path);
+
+            bool exists = DoesTableExist(Constants.LOG_TABLE_QSOS);
+
+            if (exists == false)
+                ResetDbFile(Constants.LOG_DB_CREATE_QSO_TABLE);
+
+            Load();
         }
 
-        private bool IsDatabase()
+        ~QSOLog()
         {
-            SQLiteCommand sqliteCmd = new SQLiteCommand(Constants.LOG_DB_QUERY_GENERAL, _qsoLogConnection);
-            SQLiteDataReader data;
+            Dispose();
+        }
 
-            bool hasTable;
+        public void Load()
+        {
+            _qsoTable = GetDataFromTableInOrder(Constants.LOG_TABLE_QSOS, Constants.INDEX.ID.ToString(), Constants.ORDER.DESC);
 
-
-            try
+            foreach(DataRow row in _qsoTable.Rows)
             {
-                data = sqliteCmd.ExecuteReader();
-
-                hasTable = data.HasRows;
-
-                sqliteCmd.Dispose();
-
-                data.Close();
-                data.Dispose();
-            }
-            catch
-            {
-                sqliteCmd.Dispose();
-
-                return false;
-            }
-
-            if (hasTable != true)
-                return false;
-            else
-                return true;
-        }
-
-        private void ResetDbFile()
-        {
-            _qsoLogConnection.Close();
-
-            System.IO.File.WriteAllText(_dbPath, string.Empty);
-
-            _qsoLogConnection.Open();
-
-            SQLiteCommand sqliteCmd = new SQLiteCommand(Constants.LOG_DB_CREATE_QSO_TABLE, _qsoLogConnection);
-
-            sqliteCmd.ExecuteNonQuery();
-
-            sqliteCmd.Dispose();
-        }
-
-        #endregion
-
-        #region Private Functions
-
-        private string DateTimeToSQLite(DateTime? datetime)
-        {
-            if (datetime == null)
-                return null;
-
-            return string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", datetime.Value.Year,
-                                datetime.Value.Month, datetime.Value.Day, datetime.Value.Hour,
-                                datetime.Value.Minute, datetime.Value.Second);
-        }
-
-        private List<QSO> GetQSOsFromDataReader(IDataReader data)
-        {
-            List<QSO> qso = new List<QSO>();
-
-            while (data.Read())
-            {
-                qso.Add(new QSO
+                QSOs.AddLast(new QSO
                 {
-                    ID = data.GetInt64((int)Constants.INDEX.ID),
-                    Callsign = data.GetString((int)Constants.INDEX.CALLSIGN),
-                    Name = data.IsDBNull((int)Constants.INDEX.NAME) ? null : data.GetString((int)Constants.INDEX.NAME),
-                    Country = data.IsDBNull((int)Constants.INDEX.COUNTRY) ? null : data.GetString((int)Constants.INDEX.COUNTRY),
-                    State = data.IsDBNull((int)Constants.INDEX.STATE) ? null : data.GetString((int)Constants.INDEX.STATE),
-                    County = data.IsDBNull((int)Constants.INDEX.COUNTY) ? null : data.GetString((int)Constants.INDEX.COUNTY),
-                    City = data.IsDBNull((int)Constants.INDEX.CITY) ? null : data.GetString((int)Constants.INDEX.CITY),
-                    GridSquare = data.IsDBNull((int)Constants.INDEX.GRIDSQUARE) ? null : data.GetString((int)Constants.INDEX.GRIDSQUARE),
-                    Frequency = data.IsDBNull((int)Constants.INDEX.FREQUENCY) ? null : data.GetString((int)Constants.INDEX.FREQUENCY),
-                    Band = data.IsDBNull((int)Constants.INDEX.BAND) ? null : data.GetString((int)Constants.INDEX.BAND),
-                    Mode = data.IsDBNull((int)Constants.INDEX.MODE) ? null : data.GetString((int)Constants.INDEX.MODE),
-                    DateTimeOn = data.IsDBNull((int)Constants.INDEX.DATETIMEON) ? (DateTime?)null : data.GetDateTime((int)Constants.INDEX.DATETIMEON),
-                    DateTimeOff = data.IsDBNull((int)Constants.INDEX.DATETIMEOFF) ? (DateTime?)null : data.GetDateTime((int)Constants.INDEX.DATETIMEOFF),
+                    ID = row.Field<Int64>((int)Constants.INDEX.ID),
+                    Callsign = row.Field<string>((int)Constants.INDEX.CALLSIGN),
+                    Name = row.IsNull((int)Constants.INDEX.NAME) ? null : row.Field<string>((int)Constants.INDEX.NAME),
+                    Country = row.IsNull((int)Constants.INDEX.COUNTRY) ? null : row.Field<string>((int)Constants.INDEX.COUNTRY),
+                    State = row.IsNull((int)Constants.INDEX.STATE) ? null : row.Field<string>((int)Constants.INDEX.STATE),
+                    County = row.IsNull((int)Constants.INDEX.COUNTY) ? null : row.Field<string>((int)Constants.INDEX.COUNTY),
+                    City = row.IsNull((int)Constants.INDEX.CITY) ? null : row.Field<string>((int)Constants.INDEX.CITY),
+                    GridSquare = row.IsNull((int)Constants.INDEX.GRIDSQUARE) ? null : row.Field<string>((int)Constants.INDEX.GRIDSQUARE),
+                    Frequency = row.IsNull((int)Constants.INDEX.FREQUENCY) ? null : row.Field<string>((int)Constants.INDEX.FREQUENCY),
+                    Band = row.IsNull((int)Constants.INDEX.BAND) ? null : row.Field<string>((int)Constants.INDEX.BAND),
+                    Mode = row.IsNull((int)Constants.INDEX.MODE) ? null : row.Field<string>((int)Constants.INDEX.MODE),
+                    DateTimeOn = row.IsNull((int)Constants.INDEX.DATETIMEON) ? null : row.Field<DateTime?>((int)Constants.INDEX.DATETIMEON),
+                    DateTimeOff = row.IsNull((int)Constants.INDEX.DATETIMEOFF) ? null : row.Field<DateTime?>((int)Constants.INDEX.DATETIMEOFF),
 
-                    Operator = data.IsDBNull((int)Constants.INDEX.OPERATOR) ? null : data.GetString((int)Constants.INDEX.OPERATOR),
-                    My_Name = data.IsDBNull((int)Constants.INDEX.MY_NAME) ? null : data.GetString((int)Constants.INDEX.MY_NAME),
-                    My_Country = data.IsDBNull((int)Constants.INDEX.MY_COUNTRY) ? null : data.GetString((int)Constants.INDEX.MY_COUNTRY),
-                    My_State = data.IsDBNull((int)Constants.INDEX.MY_STATE) ? null : data.GetString((int)Constants.INDEX.MY_STATE),
-                    My_County = data.IsDBNull((int)Constants.INDEX.MY_COUNTY) ? null : data.GetString((int)Constants.INDEX.MY_COUNTY),
-                    My_City = data.IsDBNull((int)Constants.INDEX.MY_CITY) ? null : data.GetString((int)Constants.INDEX.MY_CITY),
-                    My_GridSquare = data.IsDBNull((int)Constants.INDEX.MY_GRIDSQUARE) ? null : data.GetString((int)Constants.INDEX.MY_GRIDSQUARE)
+                    Operator = row.IsNull((int)Constants.INDEX.OPERATOR) ? null : row.Field<string>((int)Constants.INDEX.OPERATOR),
+                    My_Name = row.IsNull((int)Constants.INDEX.MY_NAME) ? null : row.Field<string>((int)Constants.INDEX.MY_NAME),
+                    My_Country = row.IsNull((int)Constants.INDEX.MY_COUNTRY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTRY),
+                    My_State = row.IsNull((int)Constants.INDEX.MY_STATE) ? null : row.Field<string>((int)Constants.INDEX.MY_STATE),
+                    My_County = row.IsNull((int)Constants.INDEX.MY_COUNTY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTY),
+                    My_City = row.IsNull((int)Constants.INDEX.MY_CITY) ? null : row.Field<string>((int)Constants.INDEX.MY_CITY),
+                    My_GridSquare = row.IsNull((int)Constants.INDEX.MY_GRIDSQUARE) ? null : row.Field<string>((int)Constants.INDEX.MY_GRIDSQUARE)
 
                 });
             }
 
-            qso[0].DateTimeOn = DateTime.Now;
-            return qso;
+            NextRecord = QSOs.Count == 0 ? 1 : QSOs.First.Value.ID + 1;
+
+            _qsoTable = null;
         }
-
-        #endregion
-
-        #region Query Functions
-
-        public DataTable GetAllQSOsAsDataTable()
-        {
-            // TODO
-            return null;
-        }
-
-        public List<QSO> GetAllQSOsAsList()
-        {
-            // TODO
-            return null;
-        }
-
-        public QSO GetQSOById(long id)
-        {
-            List<QSO> qso = new List<QSO>();
-
-            string sql = Constants.LOG_DB_QUERY_ID;
-
-            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
-            {
-                sqliteCmd.Parameters.AddWithValue("@id", id);
-
-
-                SQLiteDataReader data = sqliteCmd.ExecuteReader();
-
-                qso = GetQSOsFromDataReader(data);
-
-                data.Close();
-                data.Dispose();
-
-                sqliteCmd.Dispose();
-            }
-
-            return qso[0];
-        }
-
-        public List<QSO> GetQSOByCallsign(string callsign)
-        {
-            List<QSO> qso = new List<QSO>();
-
-            string sql = Constants.LOG_DB_QUERY_CALLSIGN;
-
-            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
-            {
-                sqliteCmd.Parameters.AddWithValue("@callsign", callsign);
-
-
-                SQLiteDataReader data = sqliteCmd.ExecuteReader();
-
-                qso = GetQSOsFromDataReader(data);
-
-                data.Close();
-                data.Dispose();
-
-                sqliteCmd.Dispose();
-            }
-
-            return qso;
-        }
-
-        public List<QSO> GetQSOByName(string name)
-        {
-            List<QSO> qso = new List<QSO>();
-
-            string sql = Constants.LOG_DB_QUERY_NAME;
-
-            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
-            {
-                sqliteCmd.Parameters.AddWithValue("@name", name);
-
-
-                SQLiteDataReader data = sqliteCmd.ExecuteReader();
-
-                qso = GetQSOsFromDataReader(data);
-
-                data.Close();
-                data.Dispose();
-
-                sqliteCmd.Dispose();
-            }
-
-            return qso;
-        }
-
-        #endregion
-
-        #region Database Modification Functions
 
         public void InsertQSO(QSO qso)
         {
+            qso.ID = NextRecord;
+
             string sql = Constants.LOG_DB_INSERT_QSO;
 
-            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _qsoLogConnection))
+            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _dbConnection))
             {
                 sqliteCmd.Parameters.AddWithValue("@callsign", qso.Callsign);
                 sqliteCmd.Parameters.AddWithValue("@name", qso.Name);
@@ -307,9 +138,9 @@ namespace OpenARLog.Data
                 sqliteCmd.Dispose();
             }
 
-            QSOs.Add(qso);
-        }
+            NextRecord++;
 
-        #endregion
+            QSOs.AddFirst(qso);
+        }
     }
 }
