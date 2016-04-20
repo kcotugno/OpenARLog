@@ -12,6 +12,7 @@
 using System;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 
 namespace OpenARLog.Data
 {
@@ -72,7 +73,8 @@ namespace OpenARLog.Data
 
             _dbConnection.Open();
 
-            Path = path;
+            Path = new FileInfo(path).FullName;
+
 
             IsOpen = true;
         }

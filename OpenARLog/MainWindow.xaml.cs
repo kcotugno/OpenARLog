@@ -9,7 +9,9 @@
  * Date: 8/15/2015
  */
 
+using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -58,11 +60,8 @@ namespace OpenARLog
         private void InitializeDataBinding()
         {
             // Log data
-            _qsoLog = new QSOLog();
-            
-            _qsoLog.OpenConnection(Properties.Settings.Default.LogPath);
+            _qsoLog = new QSOLog(Properties.Settings.Default.LogPath);
 
-            qsoGrid.DataContext = _qsoLog;
             qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             // Type data
@@ -99,17 +98,30 @@ namespace OpenARLog
             _qsoLog.Close();
             _qsoLog.Dispose();
         }
-        
+
         #region Menu Click Handlers
-        
+
         private void NewDBMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            SaveFileDialog saveNewLogDialog = new SaveFileDialog();
+
+            saveNewLogDialog.FileName = Constants.NEW_LOG_FILE_NAME;
+            saveNewLogDialog.Filter = Constants.LOG_FILE_EXTENSION;
+            saveNewLogDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (saveNewLogDialog.ShowDialog() == true)
+                SaveNewLogFile(saveNewLogDialog.FileName);
         }
 
         private void OpenDBMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            OpenFileDialog openLogDialog = new OpenFileDialog();
+
+            openLogDialog.Filter = Constants.LOG_FILE_EXTENSION;
+            openLogDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (openLogDialog.ShowDialog() == true)
+                OpenLogFile(openLogDialog.FileName);
         }
 
         private void ImportADIFMenuClick(object sender, RoutedEventArgs e)
@@ -347,6 +359,31 @@ namespace OpenARLog
 
 
             return datetime;
+        }
+
+        private void SaveNewLogFile(string path)
+        {
+            if (File.Exists(path))
+                File.WriteAllBytes(path, new byte[0]);
+
+            _qsoLog.Close();
+            _qsoLog.Dispose();
+
+            _qsoLog = new QSOLog(path);
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            Properties.Settings.Default.LogPath = path;
+        }
+
+        private void OpenLogFile(string path)
+        {
+            _qsoLog.Close();
+            _qsoLog.Dispose();
+
+            _qsoLog = new QSOLog(path);
+            qsoGrid.ItemsSource = _qsoLog.QSOs;
+
+            Properties.Settings.Default.LogPath = path;
         }
 
         #endregion
