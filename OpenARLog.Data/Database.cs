@@ -19,11 +19,11 @@ namespace OpenARLog.Data
     {
         protected static string SQLITE_VERSION = "3";
 
-        public string Path { get { return _dbPath; } }
-
-        protected string _dbPath;
+        public string Path { get; protected set; }
 
         protected SQLiteConnection _dbConnection;
+
+        public bool IsOpen { get; private set; } = false;
 
         #region Interface Implementation
 
@@ -58,8 +58,11 @@ namespace OpenARLog.Data
             _dbConnection = new SQLiteConnection();
         }
 
-        public void OpenConnection(string path)
+        public virtual void OpenConnection(string path)
         {
+            if (IsOpen == true)
+                return;
+
             SQLiteConnectionStringBuilder connStrBld = new SQLiteConnectionStringBuilder();
 
             connStrBld["Data Source"] = path;
@@ -69,14 +72,16 @@ namespace OpenARLog.Data
 
             _dbConnection.Open();
 
-            _dbPath = path;
+            Path = path;
+
+            IsOpen = true;
         }
 
         public void ResetDbFile(string createdb)
         {
             _dbConnection.Close();
 
-            System.IO.File.WriteAllText(_dbPath, string.Empty);
+            System.IO.File.WriteAllText(Path, string.Empty);
 
             _dbConnection.Open();
 
@@ -98,6 +103,28 @@ namespace OpenARLog.Data
 
         #region General Database Helper Methods
 
+        public bool DoesTableExist(string table)
+        {
+            string query = Constants.DB_TABLE_EXISTS + "'" + table + "'";
+            bool hasTable = false;
+
+            SQLiteCommand sqliteCmd = new SQLiteCommand(query, _dbConnection);
+            SQLiteDataReader data;
+
+            try
+            {
+                data = sqliteCmd.ExecuteReader();
+
+                hasTable = data.HasRows;
+            }
+            catch
+            {
+                return hasTable;
+            }
+
+            return hasTable;
+        }
+
         public DataTable GetDataFromTable(string table)
         {
             string sql = Constants.DB_QUERY_GENERAL + table;
@@ -107,6 +134,32 @@ namespace OpenARLog.Data
             using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _dbConnection))
             {
                 try {
+                    SQLiteDataReader reader = sqliteCmd.ExecuteReader();
+
+                    datatable = new DataTable();
+
+                    datatable.Load(reader);
+                }
+                catch
+                {
+                    datatable = null;
+                }
+
+            }
+
+            return datatable;
+        }
+
+        public DataTable GetDataFromTableInOrder(string table, string column, Constants.ORDER order)
+        {
+            string sql = Constants.DB_QUERY_GENERAL + table + Constants.DB_ORDERBY + column + " " + order;
+
+            DataTable datatable;
+
+            using (SQLiteCommand sqliteCmd = new SQLiteCommand(sql, _dbConnection))
+            {
+                try
+                {
                     SQLiteDataReader reader = sqliteCmd.ExecuteReader();
 
                     datatable = new DataTable();
