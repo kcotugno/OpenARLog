@@ -232,6 +232,12 @@ namespace OpenARLog.ADIF
             qsos.ForEach(x => WriteQSO(x));
         }
 
+        public void WriteQSOLinkedList(LinkedList<QSO> qsos)
+        {
+            foreach (QSO x in qsos)
+                WriteQSO(x);
+        }
+
         #endregion
     }
 }

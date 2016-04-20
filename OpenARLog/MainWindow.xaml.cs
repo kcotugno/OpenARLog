@@ -11,11 +11,13 @@
 
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 using OpenARLog.Data;
+using OpenARLog.ADIF;
 
 namespace OpenARLog
 {
@@ -126,12 +128,25 @@ namespace OpenARLog
 
         private void ImportADIFMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            OpenFileDialog importADIFDialog = new OpenFileDialog();
+
+            importADIFDialog.Filter = Constants.ADIF_FILE_EXTENSION;
+            importADIFDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (importADIFDialog.ShowDialog() == true)
+                ImportADIFile(importADIFDialog.FileName);
         }
 
         private void ExportADIFMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            SaveFileDialog exportADIFDialog = new SaveFileDialog();
+
+            exportADIFDialog.FileName = Constants.NEW_ADIF_FILE_NAME;
+            exportADIFDialog.Filter = Constants.ADIF_FILE_EXTENSION;
+            exportADIFDialog.InitialDirectory = new FileInfo(_qsoLog.Path).DirectoryName;
+
+            if (exportADIFDialog.ShowDialog() == true)
+                ExportADIFile(exportADIFDialog.FileName);
         }
 
         private void AboutMenuClick(object sender, RoutedEventArgs e)
@@ -384,6 +399,51 @@ namespace OpenARLog
             qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             Properties.Settings.Default.LogPath = path;
+        }
+
+        private void ImportADIFile(string path)
+        {
+            ADIReader reader = new ADIReader(path);
+
+            List<QSO> imported = reader.Read();
+
+            // Record the number of records imported
+            int num = 0;
+
+            foreach(QSO x in imported)
+            {
+                _qsoLog.InsertQSO(x);
+                num++;
+            }
+
+            reader.Close();
+
+            qsoGrid.Items.Refresh();
+
+            MessageBox.Show(string.Format("Records imported: {0}", num), "ADIF Import", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExportADIFile(string path)
+        {
+            ADIWriter writer = new ADIWriter(path, false);
+            ADIFHeader header = new ADIFHeader();
+
+            // This should be counted by the writer.
+            int num = _qsoLog.QSOs.Count;
+
+            header.InitialComment = Constants.ADIF_HEADER_COMMENT;
+            header.ProgramId = Constants.APPLICATION_NAME;
+            header.TimeStamp = DateTime.Now;
+
+            writer.SetHeader(header);
+
+            writer.WriteHeader();
+
+            writer.WriteQSOLinkedList(_qsoLog.QSOs);
+
+            writer.Close();
+
+            MessageBox.Show(string.Format("Records exported: {0}", num), "ADIF Export", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         #endregion
