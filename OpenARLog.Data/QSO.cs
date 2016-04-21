@@ -16,37 +16,32 @@ namespace OpenARLog.Data
     public class QSO
     {
         public long ID { get; set; }
-        public string Callsign { get; set; }
-        public string Name { get; set; }
+        public string Callsign { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        public string Country { get; set; }
-        public string State { get; set; }
-        public string County { get; set; }
-        public string City { get; set; }
-        public string GridSquare { get; set; }
+        public string Country { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string County { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string GridSquare { get; set; } = string.Empty;
 
-        public string Frequency { get; set; }
-        public string Band { get; set; }
-        public string Mode { get; set; }
+        public string Frequency { get; set; } = string.Empty;
+        public string Band { get; set; } = string.Empty;
+        public string Mode { get; set; } = string.Empty;
 
         // These two members will hold the Equivalent TIME_ON/QSO_DATE and TIME_OFF/QSO_DATE_OFF
-        public DateTime? DateTimeOn { get; set; }
-        public DateTime? DateTimeOff { get; set; }
+        public DateTime? DateTimeOn { get; set; } = null;
+        public DateTime? DateTimeOff { get; set; } = null;
 
         // Logging station's info.
-        public string Operator { get; set; }
-        public string My_Name { get; set; }
+        public string Operator { get; set; } = string.Empty;
+        public string My_Name { get; set; } = string.Empty;
 
-        public string My_Country { get; set; }
-        public string My_State { get; set; }
-        public string My_County { get; set; }
-        public string My_City { get; set; }
-        public string My_GridSquare { get; set; }
-
-        public QSO()
-        {
-            Clear();
-        }
+        public string My_Country { get; set; } = string.Empty;
+        public string My_State { get; set; } = string.Empty;
+        public string My_County { get; set; } = string.Empty;
+        public string My_City { get; set; } = string.Empty;
+        public string My_GridSquare { get; set; } = string.Empty;
 
         public override string ToString()
         {

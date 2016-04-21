@@ -25,7 +25,7 @@ namespace OpenARLog.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("OARLCallLog.s3db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("CallLog.s3db")]
         public string LogPath {
             get {
                 return ((string)(this["LogPath"]));
@@ -68,6 +68,90 @@ namespace OpenARLog.Properties {
             }
             set {
                 this["IsWindowMaximized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Operator {
+            get {
+                return ((string)(this["Operator"]));
+            }
+            set {
+                this["Operator"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyName {
+            get {
+                return ((string)(this["MyName"]));
+            }
+            set {
+                this["MyName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyCountry {
+            get {
+                return ((string)(this["MyCountry"]));
+            }
+            set {
+                this["MyCountry"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyState {
+            get {
+                return ((string)(this["MyState"]));
+            }
+            set {
+                this["MyState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyCounty {
+            get {
+                return ((string)(this["MyCounty"]));
+            }
+            set {
+                this["MyCounty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyCity {
+            get {
+                return ((string)(this["MyCity"]));
+            }
+            set {
+                this["MyCity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyGridSquare {
+            get {
+                return ((string)(this["MyGridSquare"]));
+            }
+            set {
+                this["MyGridSquare"] = value;
             }
         }
     }

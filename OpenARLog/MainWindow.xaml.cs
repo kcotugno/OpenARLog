@@ -29,6 +29,9 @@ namespace OpenARLog
     {
         private QSOLog _qsoLog;
 
+        // Holds the logging stations information
+        private QSO _operator = new QSO();
+
         private bool uiVisible = false;
 
         // Types
@@ -80,6 +83,17 @@ namespace OpenARLog
             bandTxt.ItemsSource = _bandsManager.Bands;
             modeTxt.ItemsSource = _modesManager.Modes;
             countryTxt.ItemsSource = _countriesManager.Countries;
+        }
+
+        private void LoadOperatorInfo()
+        {
+            _operator.Operator = Properties.Settings.Default.Operator;
+            _operator.My_Name = Properties.Settings.Default.MyName;
+            _operator.My_Country = Properties.Settings.Default.MyCountry;
+            _operator.My_State = Properties.Settings.Default.MyState;
+            _operator.My_County = Properties.Settings.Default.MyCounty;
+            _operator.My_City = Properties.Settings.Default.MyCity;
+            _operator.My_GridSquare = Properties.Settings.Default.MyGridSquare;
         }
 
         #endregion
@@ -210,7 +224,15 @@ namespace OpenARLog
                 Mode = modeTxt.Text,
                 Frequency = frequencyTxt.Text,
                 DateTimeOn = GetDateTime(timeOnTxt.Text, dateOnTxt.Text),
-                DateTimeOff = GetDateTime(timeOffTxt.Text, dateOffTxt.Text)
+                DateTimeOff = GetDateTime(timeOffTxt.Text, dateOffTxt.Text),
+
+                Operator = _operator.Operator,
+                My_Name = _operator.My_Name,
+                My_Country = _operator.My_Country,
+                My_State = _operator.My_State,
+                My_County = _operator.My_County,
+                My_City = _operator.My_City,
+                My_GridSquare = _operator.My_GridSquare
             };
 
             _qsoLog.InsertQSO(contact);
