@@ -9,6 +9,7 @@ Work is done in my spare time while attending school. Thus it is coming slowly b
 aiming for an alpha relase this summer. C# and the .Net Framework are new to me so the code will
 be cleaned over time as I learn more. Feel free to send a Pull-Request if you wish to contribute.
 
+# Projects
 
 OpenARLog: This project contains the front-end code, including the UI. So far, only a basic
 non-functional interface has been implemented.
@@ -23,6 +24,7 @@ These are still in their early development. The UI is unusable, Data is only par
 Work will be focused on finishing the back end before the UI will be completed.
 
 #Dependencies
+
 System.Data.SQLite
 
 Get from VS NuGet Package Manager.
@@ -34,11 +36,3 @@ Just open the solution in Visual Studio, build and run.
 
 * master - Main development branch.
 * ui-dev - UI development branch.
-
-
-
-Kevin
-
-W6KMC
-
-Previously KI6LOQ
