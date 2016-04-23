@@ -44,9 +44,9 @@ namespace OpenARLog.ADIF
         // A struct told hold an entry header to be passed to the data parser.
         private struct _FieldHeader
         {
-            public string name;
-            public int length;
-            public string type;
+            public string Name;
+            public int Length;
+            public string Type;
         }
 
         #endregion
@@ -110,7 +110,7 @@ namespace OpenARLog.ADIF
         #region Private Functions
 
         // Parse the file header. As per the format, if "<" is found at index 0, it is assumed
-        // that there is no header and woudl thus move to scanning records. Otherwise the line is
+        // that there is no header and would thus move to scanning records. Otherwise the line is
         // passed to the line parser for further evaluation.
         private void ParseHeader()
         {
@@ -210,7 +210,7 @@ namespace OpenARLog.ADIF
 
                 // This is a pretty inefficient way of finding the EOH. Fix later.
                 // TODO Make more efficient.
-                return _headerFields.Exists(x => x._header.name == "EOH");
+                return _headerFields.Exists(x => x._header.Name == "EOH");
 
             }
 
@@ -242,9 +242,9 @@ namespace OpenARLog.ADIF
         {
             // Struct to hold the header data.
             _FieldHeader results;
-            results.name = string.Empty;
-            results.length = 0;
-            results.type = null;
+            results.Name = string.Empty;
+            results.Length = 0;
+            results.Type = null;
 
             string sub = string.Empty;
 
@@ -257,11 +257,11 @@ namespace OpenARLog.ADIF
             // The data name is simple and always in a header.
             if (first != -1)
             {
-                results.name = header.Substring((open + 1), (first - open) - 1).ToUpper();
+                results.Name = header.Substring((open + 1), (first - open) - 1).ToUpper();
             }
             else
             {
-                results.name = header.Substring((open + 1), (close - open) - 1).ToUpper();
+                results.Name = header.Substring((open + 1), (close - open) - 1).ToUpper();
                 return results;
             }
 
@@ -269,13 +269,13 @@ namespace OpenARLog.ADIF
             // Currently, in the long run, user defined fields will be ignored.
             if (second == -1)
             {
-                results.length = int.Parse(header.Substring((first + 1), (close - first) - 1));
+                results.Length = int.Parse(header.Substring((first + 1), (close - first) - 1));
             }
             else
             {
-                results.length = int.Parse(header.Substring((first + 1), (second - first) - 1));
+                results.Length = int.Parse(header.Substring((first + 1), (second - first) - 1));
 
-                results.type = header.Substring((second + 1), (close - second) - 1);
+                results.Type = header.Substring((second + 1), (close - second) - 1);
             }
 
             return results;
@@ -306,7 +306,7 @@ namespace OpenARLog.ADIF
                 }
                 else
                 {
-                    switch (x._header.name)
+                    switch (x._header.Name)
                     {
 
                         case "NAME":
@@ -444,7 +444,7 @@ namespace OpenARLog.ADIF
         // The ADIF file format stores its times in UTC. We will leave any conversion to the parent program.
         DateTime? GetTimeFromRecord(_Field record)
         {
-            if (record._header.length != 6 && record._header.length != 4)
+            if (record._header.Length != 6 && record._header.Length != 4)
                 return null;
 
             string temp = string.Empty;
@@ -468,7 +468,7 @@ namespace OpenARLog.ADIF
         // The ADIF file format stores its date with respect to the UTC time.
         private DateTime? GetDateFromRecord(_Field record)
         {
-            if (record._header.length != 8)
+            if (record._header.Length != 8)
                 return null;
 
             int year = 0;
