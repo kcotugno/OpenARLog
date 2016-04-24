@@ -173,13 +173,13 @@ namespace OpenARLog.ADIF
                 record._header = ParseFieldHeader(line.Substring(index, (line.IndexOf(">", index) - index) + 1));
 
                 // Separate and pass the field.
-                record._data = GetFieldDataFromWithHeader(record._header, line.Substring(index, (line.IndexOf(">", index) - index) + record._header.length + 1));
+                record._data = GetFieldDataFromWithHeader(record._header, line.Substring(index, (line.IndexOf(">", index) - index) + record._header.Length + 1));
 
                 // Place record in a list in case there are multiple per line.
                 results.Add(record);
 
                 // Keep the index upto date on what has been parsed.
-                index = line.IndexOf(">", index) + record._header.length + 1;
+                index = line.IndexOf(">", index) + record._header.Length + 1;
             }
 
             return results;
@@ -286,7 +286,7 @@ namespace OpenARLog.ADIF
         {
             string data;
 
-            data = line.Substring((line.IndexOf(">") + 1), header.length);
+            data = line.Substring((line.IndexOf(">") + 1), header.Length);
 
             return data;
         }
@@ -299,7 +299,7 @@ namespace OpenARLog.ADIF
 
             foreach (_Field x in _qsoFields)
             {
-                if (x._header.name == "EOR")
+                if (x._header.Name == "EOR")
                 {
                     qsos.Add(temp);
                     temp = new QSO();
