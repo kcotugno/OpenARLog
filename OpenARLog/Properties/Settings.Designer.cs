@@ -154,5 +154,17 @@ namespace OpenARLog.Properties {
                 this["MyGridSquare"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowExtraFields {
+            get {
+                return ((bool)(this["ShowExtraFields"]));
+            }
+            set {
+                this["ShowExtraFields"] = value;
+            }
+        }
     }
 }

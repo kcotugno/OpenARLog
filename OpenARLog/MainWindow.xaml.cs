@@ -55,9 +55,8 @@ namespace OpenARLog
             // Make UX better
             callsignTxt.Focus();
 
-            // Hide extra entry fields.
-            moreContGroup.Visibility = Visibility.Collapsed;
-            extraQSLGroup.Visibility = Visibility.Collapsed;
+            // Reset extra entry fields visibility.
+            ShowExtraFileds(Properties.Settings.Default.ShowExtraFields);
 
             InitializeDataBinding();
         }
@@ -103,6 +102,7 @@ namespace OpenARLog
             Properties.Settings.Default.WindowWidth = Width;
             Properties.Settings.Default.WindowHeigth = Height;
             Properties.Settings.Default.IsWindowMaximized = WindowState == WindowState.Maximized ? true : false;
+            Properties.Settings.Default.ShowExtraFields = uiVisible;
 
             Properties.Settings.Default.LogPath = _qsoLog.Path;
 
@@ -187,19 +187,11 @@ namespace OpenARLog
         {
             if (uiVisible == true)
             {
-                uiVisible = false;
-                showBtn.Content = "More";
-
-                moreContGroup.Visibility = Visibility.Collapsed;
-                extraQSLGroup.Visibility = Visibility.Collapsed;
+                ShowExtraFileds(false);
             }
             else
             {
-                uiVisible = true;
-                showBtn.Content = "Less";
-
-                moreContGroup.Visibility = Visibility.Visible;
-                extraQSLGroup.Visibility = Visibility.Visible;
+                ShowExtraFileds(true);
             }
         }
 
@@ -319,6 +311,27 @@ namespace OpenARLog
             qslSentTxt.SelectedIndex = -1;
 
             callsignTxt.Focus();
+        }
+
+        private void ShowExtraFileds(bool visible)
+        {
+            uiVisible = visible;
+
+            if (visible == false)
+            {
+
+                showBtn.Content = "More";
+
+                moreContGroup.Visibility = Visibility.Collapsed;
+                extraQSLGroup.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                showBtn.Content = "Less";
+
+                moreContGroup.Visibility = Visibility.Visible;
+                extraQSLGroup.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
