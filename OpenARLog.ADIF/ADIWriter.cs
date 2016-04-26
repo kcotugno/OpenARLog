@@ -32,7 +32,7 @@ namespace OpenARLog.ADIF
         private string _filePath;
         private StreamWriter _streamer;
 
-        private bool fileexists = false;
+        private bool fileExists = false;
 
         #endregion
 
@@ -80,7 +80,7 @@ namespace OpenARLog.ADIF
 
         public bool DidFilePreexist()
         {
-            return fileexists;
+            return fileExists;
         }
 
         public void SetHeader(ADIFHeader header)
@@ -93,7 +93,7 @@ namespace OpenARLog.ADIF
 
         public void Open(string filepath, bool append)
         {
-            fileexists = File.Exists(filepath);
+            fileExists = File.Exists(filepath);
 
             try
             {
@@ -229,7 +229,8 @@ namespace OpenARLog.ADIF
 
         public void WriteQSOList(List<QSO> qsos)
         {
-            qsos.ForEach(x => WriteQSO(x));
+            foreach (QSO x in qsos)
+                WriteQSO(x);
         }
 
         public void WriteQSOLinkedList(LinkedList<QSO> qsos)
