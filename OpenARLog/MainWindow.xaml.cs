@@ -58,6 +58,8 @@ namespace OpenARLog
             // Reset extra entry fields visibility.
             ShowExtraFileds(Properties.Settings.Default.ShowExtraFields);
 
+            LoadOperatorInfo();
+
             InitializeDataBinding();
         }
 
@@ -105,6 +107,14 @@ namespace OpenARLog
             Properties.Settings.Default.ShowExtraFields = uiVisible;
 
             Properties.Settings.Default.LogPath = _qsoLog.Path;
+
+            Properties.Settings.Default.Operator = _operator.Operator;
+            Properties.Settings.Default.MyName= _operator.My_Name;
+            Properties.Settings.Default.MyCountry= _operator.My_Country;
+            Properties.Settings.Default.MyState = _operator.My_State;
+            Properties.Settings.Default.MyCounty = _operator.My_County;
+            Properties.Settings.Default.MyCity = _operator.My_City;
+            Properties.Settings.Default.MyGridSquare = _operator.My_GridSquare;
 
             Properties.Settings.Default.Save();
         }
@@ -161,6 +171,34 @@ namespace OpenARLog
 
             if (exportADIFDialog.ShowDialog() == true)
                 ExportADIFile(exportADIFDialog.FileName);
+        }
+
+        private void OperatorInformationClick(object sender, RoutedEventArgs e)
+        {
+            OperatorInformation info = new OperatorInformation(_operator.Operator, _operator.My_Name, _operator.My_Country, _operator.My_State,
+                                                                _operator.My_County, _operator.My_City, _operator.My_GridSquare);
+
+
+            if(info.ShowDialog() == true)
+            {
+                _operator.Operator= info.Callsign;
+                _operator.My_Name = info.Name;
+                _operator.My_Country = info.Country;
+                _operator.My_State = info.State;
+                _operator.My_County = info.County;
+                _operator.My_City = info.City;
+                _operator.My_GridSquare = info.GridSquare;
+
+                Properties.Settings.Default.Operator = _operator.Operator;
+                Properties.Settings.Default.MyName = _operator.My_Name;
+                Properties.Settings.Default.MyCountry = _operator.My_Country;
+                Properties.Settings.Default.MyState = _operator.My_State;
+                Properties.Settings.Default.MyCounty = _operator.My_County;
+                Properties.Settings.Default.MyCity = _operator.My_City;
+                Properties.Settings.Default.MyGridSquare = _operator.My_GridSquare;
+
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void AboutMenuClick(object sender, RoutedEventArgs e)
@@ -423,6 +461,8 @@ namespace OpenARLog
             qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             Properties.Settings.Default.LogPath = path;
+
+            Properties.Settings.Default.Save();
         }
 
         private void OpenLogFile(string path)
@@ -434,6 +474,8 @@ namespace OpenARLog
             qsoGrid.ItemsSource = _qsoLog.QSOs;
 
             Properties.Settings.Default.LogPath = path;
+
+            Properties.Settings.Default.Save();
         }
 
         private void ImportADIFile(string path)

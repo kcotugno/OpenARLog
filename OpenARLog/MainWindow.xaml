@@ -26,6 +26,9 @@
                 <Separator/>
                 <MenuItem Header="Exit" Click="ExitMenuItemClick"/>
             </MenuItem>
+            <MenuItem Header="Settings">
+                <MenuItem Header="Operator" Click="OperatorInformationClick"/>
+            </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="About" Click="AboutMenuClick"/>
             </MenuItem>
