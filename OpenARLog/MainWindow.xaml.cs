@@ -40,6 +40,7 @@ namespace OpenARLog
         private BandsManager _bandsManager;
         private ModesManager _modesManager;
         private CountriesManager _countriesManager;
+        private StatesManager _statesManager;
 
         #region Initialization Methods
 
@@ -76,14 +77,17 @@ namespace OpenARLog
             _bandsManager = new BandsManager(_typeDataDb);
             _modesManager = new ModesManager(_typeDataDb);
             _countriesManager = new CountriesManager(_typeDataDb);
+            _statesManager = new StatesManager(_typeDataDb);
 
             _bandsManager.LoadAndUpdate();
             _modesManager.LoadAndUpdate();
             _countriesManager.LoadAndUpdate();
+            _statesManager.LoadAndUpdate();
 
             bandTxt.ItemsSource = _bandsManager.Bands;
             modeTxt.ItemsSource = _modesManager.Modes;
             countryTxt.ItemsSource = _countriesManager.Countries;
+            stateTxt.ItemsSource = _statesManager.States;
         }
 
         private void LoadOperatorInfo()
@@ -235,6 +239,12 @@ namespace OpenARLog
 
         private void LogBtnClick(object sender, RoutedEventArgs e)
         {
+            if(callsignTxt.Text == string.Empty)
+            {
+                MessageBox.Show("Please enter a callsign", "Enter Callsign", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
             if (IsValidTime(timeOnTxt.Text) == false || IsValidDate(dateOnTxt.Text) == false)
                 return;
 
@@ -281,6 +291,15 @@ namespace OpenARLog
                 logBtn.IsEnabled = false;
             else
                 logBtn.IsEnabled = true;
+        }
+
+        private void countryChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            CountryModel country= (CountryModel)countryTxt.SelectedItem;
+
+            _statesManager.CurrentCountry = country.Code;
+
+            stateTxt.ItemsSource = _statesManager.States;
         }
 
         private void TimeOnGotFocus(object sender, RoutedEventArgs e)
@@ -524,6 +543,5 @@ namespace OpenARLog
         }
 
         #endregion
-
     }
 }

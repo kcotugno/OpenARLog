@@ -17,11 +17,13 @@ namespace OpenARLog.Data
         {
             BANDS = 0,
             COUNTRIES,
+            PRIMARY_SUB,
             MODES,
             SUBMODES
         };
 
-        private static string[] _types = { "Bands", "Country_Codes_and_Names", "Modes", "Submodes" };
+        // These are the names of the tables in the database. The indexes are retrieved from the enum above.
+        private static string[] _types = { "Bands", "Country_Codes_and_Names", "Primary_Admin_Subs", "Modes", "Submodes" };
 
         public enum INDEX
         {

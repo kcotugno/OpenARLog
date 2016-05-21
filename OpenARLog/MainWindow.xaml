@@ -48,9 +48,9 @@
                             <Label Content="Name"/>
                             <TextBox Name="nameTxt" TextWrapping="Wrap" TabIndex="1"/>
                             <Label Content="Country"/>
-                            <ComboBox Name="countryTxt" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" TabIndex="2"/>
+                            <ComboBox Name="countryTxt" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" TabIndex="2" SelectionChanged="countryChanged"/>
                             <Label Content="State"/>
-                            <ComboBox Name="stateTxt" TabIndex="3"/>
+                            <ComboBox Name="stateTxt" TabIndex="3" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="Name" />
                             <Label Content="City"/>
                             <TextBox Name="cityTxt" TextWrapping="Wrap" TabIndex="5"/>
                             <Label Content="Grid Square" />
