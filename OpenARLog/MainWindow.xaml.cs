@@ -295,9 +295,10 @@ namespace OpenARLog
 
         private void countryChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            CountryModel country= (CountryModel)countryTxt.SelectedItem;
+            CountryModel country = (CountryModel)countryTxt.SelectedItem;
 
-            _statesManager.CurrentCountry = country.Code;
+            // If country is null, no country is selected so reset to -1.
+            _statesManager.CurrentCountry = country == null ? StatesManager.NO_COUNTRY : country.Code;
 
             stateTxt.ItemsSource = _statesManager.States;
         }

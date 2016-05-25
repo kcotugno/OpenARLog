@@ -17,6 +17,7 @@ namespace OpenARLog.Data
 {
     public class StatesManager : TypeDataManager
     {
+        public static int NO_COUNTRY = -1;
 
         public List<StateModel> States
         {
