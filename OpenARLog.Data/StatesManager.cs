@@ -33,7 +33,7 @@ namespace OpenARLog.Data
 
         private List<StateModel> _states;
 
-        public int CurrentCountry { get; set; } = -1;
+        public int CurrentCountry { get; set; } = NO_COUNTRY;
 
         public bool IncludeDeleted { get; set; } = false;
 
