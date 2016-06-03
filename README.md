@@ -5,9 +5,12 @@ Open source Amateur Radio logging Application for Windows.
 
 # Overview
 
-Work is done in my spare time while attending school. Thus it is coming slowly but surely. I am
-aiming for an alpha relase this summer. C# and the .Net Framework are new to me so the code will
-be cleaned over time as I learn more. Feel free to send a Pull-Request if you wish to contribute.
+Alpha release comeing soon...
+
+Designed to be a simplistic and powerful Amateur Radio logging application. Currently, there no plans to 
+have advanced network features. It will just be a simple easy to use logger capable of ADIF export 
+and import, portable database, simplified interface, and supporting all the necessary log data.
+
 
 # Projects
 
@@ -20,8 +23,8 @@ format.
 OpenARLog.Data: This project contains the library for handling the data internally and interfacing
 with the SQLite database.
 
-These are still in their early development. The UI is unusable, Data is only partially developed.
-Work will be focused on finishing the back end before the UI will be completed.
+These are still in their early development. Both the UI and data management are partially
+implemented.
 
 #Dependencies
 
