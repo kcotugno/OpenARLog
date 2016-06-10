@@ -14,7 +14,7 @@ namespace OpenARLog
     class Constants
     {
         public static string APPLICATION_NAME = "OpenARLog";
-        public static string RELEASE_TYPE = "Dev";
+        public static string RELEASE_TYPE = "ALPHA";
 
         public static string LOG_FILE_EXTENSION = "OpenARLog Database|*.s3db";
         public static string NEW_LOG_FILE_NAME = "NewLog";
