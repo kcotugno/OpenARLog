@@ -14,6 +14,7 @@ namespace OpenARLog
     class Constants
     {
         public static string APPLICATION_NAME = "OpenARLog";
+        public static string RELEASE_TYPE = "Dev";
 
         public static string LOG_FILE_EXTENSION = "OpenARLog Database|*.s3db";
         public static string NEW_LOG_FILE_NAME = "NewLog";
@@ -22,5 +23,9 @@ namespace OpenARLog
         public static string NEW_ADIF_FILE_NAME = "LogBackup";
 
         public static string ADIF_HEADER_COMMENT = "Exported from OpenARLog: Open Amateur Radio Log";
+
+        public static string ABOUT_MESSAGE = APPLICATION_NAME + " v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " (" + RELEASE_TYPE + "): Copyright © 2015-2015 kcotugno.\n\n" +
+                            "Thank you for trying " + APPLICATION_NAME + ".\n" +
+                            "Developed by kcotugno W6KMC.";
     }
 }

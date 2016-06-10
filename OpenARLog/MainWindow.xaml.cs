@@ -207,7 +207,7 @@ namespace OpenARLog
 
         private void AboutMenuClick(object sender, RoutedEventArgs e)
         {
-            showTODOMessage();
+            MessageBox.Show(Constants.ABOUT_MESSAGE, Constants.APPLICATION_NAME, MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
         
         private void ExitMenuItemClick(object sender, RoutedEventArgs e)
