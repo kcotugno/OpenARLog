@@ -23,7 +23,7 @@ namespace OpenARLog.Data
         };
 
         // These are the names of the tables in the database. The indexes are retrieved from the enum above.
-        private static string[] _types = { "Bands", "Country_Codes_and_Names", "Primary_Admin_Subs", "Modes", "Submodes" };
+        private static readonly string[] _types = { "Bands", "Country_Codes_and_Names", "Primary_Admin_Subs", "Modes", "Submodes" };
 
         public enum INDEX
         {
@@ -56,21 +56,21 @@ namespace OpenARLog.Data
             DESC
         }
 
-        public static string TYPE_DATA_DB_NAME = "type_data.s3db";
+        public static readonly string TYPE_DATA_DB_NAME = "type_data.s3db";
 
-        public static string LOG_TABLE_QSOS = "QSOs";
+        public static readonly string LOG_TABLE_QSOS = "QSOs";
 
         #region SQLite Commands
 
-        public static string DB_QUERY_GENERAL = "SELECT * FROM ";
+        public static readonly string DB_QUERY_GENERAL = "SELECT * FROM ";
 
         // Keep space for proper formating
-        public static string DB_ORDERBY = " ORDER BY ";
+        public static readonly string DB_ORDERBY = " ORDER BY ";
 
         // Remember to add single quotes around the table name added.
-        public static string DB_TABLE_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=";
+        public static readonly string DB_TABLE_EXISTS = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=";
 
-        public static string LOG_DB_CREATE_QSO_TABLE = "CREATE TABLE IF NOT EXISTS QSOs " +
+        public static readonly string LOG_DB_CREATE_QSO_TABLE = "CREATE TABLE IF NOT EXISTS QSOs " +
                                                         "(ID INTEGER PRIMARY KEY NOT NULL, CALLSIGN TEXT NOT NULL, " +
                                                         "NAME TEXT, COUNTRY TEXT, STATE TEXT, COUNTY TEXT, " +
                                                         "CITY TEXT, GRIDSQUARE TEXT, FREQUENCY TEXT, BAND TEXT, " +
@@ -78,7 +78,7 @@ namespace OpenARLog.Data
                                                         "OPERATOR TEXT, MY_NAME TEXT, MY_COUNTRY TEXT, MY_STATE " +
                                                         "TEXT, MY_COUNTY TEXT, MY_CITY TEXT, MY_GRIDSQUARE TEXT)";
 
-        public static string LOG_DB_INSERT_QSO = "INSERT INTO QSOs (CALLSIGN, NAME, COUNTRY, STATE, COUNTY, CITY, " +
+        public static readonly string LOG_DB_INSERT_QSO = "INSERT INTO QSOs (CALLSIGN, NAME, COUNTRY, STATE, COUNTY, CITY, " +
                                                  "GRIDSQUARE, FREQUENCY, BAND, MODE, DATETIMEON, DATETIMEOFF, " +
                                                  "OPERATOR, MY_NAME, MY_COUNTRY, MY_STATE, MY_COUNTY, MY_CITY, " +
                                                  "MY_GRIDSQUARE) " +
@@ -88,15 +88,15 @@ namespace OpenARLog.Data
                                                  "@mygridsquare)";
 
         // Query commands
-        public static string LOG_DB_QUERY_GENERAL = "SELECT * FROM QSOs";
+        public static readonly string LOG_DB_QUERY_GENERAL = "SELECT * FROM QSOs";
 
-        public static string LOG_DB_QUERY_GENERAL_ORDER_ID_DESC = "SELECT * FROM QSOs ORDER BY ID DESC";
+        public static readonly string LOG_DB_QUERY_GENERAL_ORDER_ID_DESC = "SELECT * FROM QSOs ORDER BY ID DESC";
 
-        public static string LOG_DB_QUERY_ID = "SELECT * FROM QSOs WHERE ID = @id";
+        public static readonly string LOG_DB_QUERY_ID = "SELECT * FROM QSOs WHERE ID = @id";
 
-        public static string LOG_DB_QUERY_CALLSIGN = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
+        public static readonly string LOG_DB_QUERY_CALLSIGN = "SELECT * FROM QSOs WHERE CALLSIGN = @callsign";
 
-        public static string LOG_DB_QUERY_NAME = "SELECT * FROM QSOs WHERE NAME = @name";
+        public static readonly string LOG_DB_QUERY_NAME = "SELECT * FROM QSOs WHERE NAME = @name";
 
         #endregion
 
