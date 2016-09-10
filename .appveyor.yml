@@ -1,7 +1,4 @@
 version: 0.1.{build}
-branches:
-  only:
-  - master
 configuration: Release
 platform: Any CPU
 before_build:
