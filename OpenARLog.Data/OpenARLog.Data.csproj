@@ -91,9 +91,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <AdditionalFiles Include="..\data\type_data.s3db">
+    <None Include="..\data\type_data.s3db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AdditionalFiles>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
