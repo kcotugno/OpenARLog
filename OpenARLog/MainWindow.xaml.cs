@@ -1,9 +1,9 @@
 ﻿/*
- * Copyright (C) 2015-2016 kcotugno
+ * Copyright (C) 2015-2016 Kevin Cotugno
  * All rights reserved
  *
- * Distributed under the terms of the BSD 2 Clause software license. See the
- * accompanying LICENSE file or http://www.opensource.org/licenses/BSD-2-Clause.
+ * Distributed under the terms of the MIT license. See the
+ * accompanying LICENSE file or https://opensource.org/licenses/MIT.
  *
  * Author: kcotugno
  * Date: 8/15/2015
