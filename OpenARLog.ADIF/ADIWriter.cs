@@ -188,16 +188,16 @@ namespace OpenARLog.ADIF
             if (!(qso.Mode == string.Empty))
                 _streamer.WriteLine(string.Format("<MODE:{0}>{1}", qso.Mode.Length, qso.Mode));
 
-            if (!(qso.DateTimeOn == null))
+            if (!(qso.DateTimeOn == new DateTime()))
             {
-                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.DateTimeOn.Value.ToUniversalTime().ToString("HHmmss")));
-                _streamer.WriteLine(string.Format("<QSO_DATE:8>{0}", qso.DateTimeOn.Value.ToUniversalTime().ToString("yyyyMMdd")));
+                _streamer.WriteLine(string.Format("<TIME_ON:6>{0}", qso.DateTimeOn.ToUniversalTime().ToString("HHmmss")));
+                _streamer.WriteLine(string.Format("<QSO_DATE:8>{0}", qso.DateTimeOn.ToUniversalTime().ToString("yyyyMMdd")));
             }
 
-            if (!(qso.DateTimeOff == null))
+            if (!(qso.DateTimeOff == new DateTime()))
             {
-                _streamer.WriteLine(string.Format("<TIME_OFF:6>{0}", qso.DateTimeOff.Value.ToUniversalTime().ToString("HHmmss")));
-                _streamer.WriteLine(string.Format("<QSO_DATE_OFF:8>{0}", qso.DateTimeOff.Value.ToUniversalTime().ToString("yyyyMMdd")));
+                _streamer.WriteLine(string.Format("<TIME_OFF:6>{0}", qso.DateTimeOff.ToUniversalTime().ToString("HHmmss")));
+                _streamer.WriteLine(string.Format("<QSO_DATE_OFF:8>{0}", qso.DateTimeOff.ToUniversalTime().ToString("yyyyMMdd")));
             }
 
             if (!(qso.Operator == string.Empty))

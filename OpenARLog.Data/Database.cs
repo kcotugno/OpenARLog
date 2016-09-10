@@ -184,14 +184,14 @@ namespace OpenARLog.Data
             return datatable;
         }
 
-        public string DateTimeToSQLite(DateTime? datetime)
+        public string DateTimeToSQLite(DateTime datetime)
         {
             if (datetime == null)
                 return null;
 
-            return string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", datetime.Value.Year,
-                                datetime.Value.Month, datetime.Value.Day, datetime.Value.Hour,
-                                datetime.Value.Minute, datetime.Value.Second);
+            return string.Format("{0}-{1:00}-{2:00} {3:00}:{4:00}:{5:00}", datetime.Year,
+                                datetime.Month, datetime.Day, datetime.Hour,
+                                datetime.Minute, datetime.Second);
         }
 
         #endregion

@@ -427,10 +427,10 @@ namespace OpenARLog
             return IsValidDateOrTime(date, '/');
         }
 
-        private DateTime? GetDateTime(string time, string date)
+        private DateTime GetDateTime(string time, string date)
         {
             if (time == string.Empty && date == string.Empty)
-                return null;
+                return new DateTime();
 
             int year = 1500;
             int month = 1;
@@ -462,9 +462,8 @@ namespace OpenARLog
             }
             catch
             {
-                return null;
+                return new DateTime();
             }
-
 
             return datetime;
         }

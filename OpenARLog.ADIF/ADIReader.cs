@@ -403,7 +403,7 @@ namespace OpenARLog.ADIF
         }
 
         // The date and time get stored in different filed in file.We need to merge these so TimeOn/TimeOff store both.
-        private DateTime? MergeDateAndTime(DateTime? current, DateTime? toMerge)
+        private DateTime MergeDateAndTime(DateTime current, DateTime toMerge)
         {
             if (current == null)
                 return toMerge;
@@ -416,36 +416,36 @@ namespace OpenARLog.ADIF
             int minutes = 0;
             int seconds = 0;
             
-            if (current.Value.ToString("yyyyMMdd") == "15000101")
+            if (current.ToString("yyyyMMdd") == "15000101")
             {
-                year = Convert.ToInt32(toMerge.Value.ToString("yyyy"));
-                month = Convert.ToInt32(toMerge.Value.ToString("%M"));
-                day = Convert.ToInt32(toMerge.Value.ToString("%d"));
+                year = Convert.ToInt32(toMerge.ToString("yyyy"));
+                month = Convert.ToInt32(toMerge.ToString("%M"));
+                day = Convert.ToInt32(toMerge.ToString("%d"));
 
-                hours = Convert.ToInt32(current.Value.ToString("%H"));
-                minutes = Convert.ToInt32(current.Value.ToString("%m"));
-                seconds = Convert.ToInt32(current.Value.ToString("%s"));
+                hours = Convert.ToInt32(current.ToString("%H"));
+                minutes = Convert.ToInt32(current.ToString("%m"));
+                seconds = Convert.ToInt32(current.ToString("%s"));
 
                 return new DateTime(year, month, day, hours, minutes, seconds, DateTimeKind.Utc);
             }  else
             {
-                year = Convert.ToInt32(current.Value.ToString("yyyy"));
-                month = Convert.ToInt32(current.Value.ToString("%M"));
-                day = Convert.ToInt32(current.Value.ToString("%d"));
+                year = Convert.ToInt32(current.ToString("yyyy"));
+                month = Convert.ToInt32(current.ToString("%M"));
+                day = Convert.ToInt32(current.ToString("%d"));
 
-                hours = Convert.ToInt32(toMerge.Value.ToString("%H"));
-                minutes = Convert.ToInt32(toMerge.Value.ToString("%m"));
-                seconds = Convert.ToInt32(toMerge.Value.ToString("%s"));
+                hours = Convert.ToInt32(toMerge.ToString("%H"));
+                minutes = Convert.ToInt32(toMerge.ToString("%m"));
+                seconds = Convert.ToInt32(toMerge.ToString("%s"));
 
                 return new DateTime(year, month, day, hours, minutes, seconds, DateTimeKind.Utc);
             }
         }
 
         // The ADIF file format stores its times in UTC. We will leave any conversion to the parent program.
-        DateTime? GetTimeFromRecord(_Field record)
+        DateTime GetTimeFromRecord(_Field record)
         {
             if (record._header.Length != 6 && record._header.Length != 4)
-                return null;
+                return new DateTime();
 
             string temp = string.Empty;
 
@@ -466,10 +466,10 @@ namespace OpenARLog.ADIF
         }
 
         // The ADIF file format stores its date with respect to the UTC time.
-        private DateTime? GetDateFromRecord(_Field record)
+        private DateTime GetDateFromRecord(_Field record)
         {
             if (record._header.Length != 8)
-                return null;
+                return new DateTime();
 
             int year = 0;
             int month = 0;

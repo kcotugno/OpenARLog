@@ -15,7 +15,7 @@ namespace OpenARLog.Data
 {
     public class QSO
     {
-        public long ID { get; set; }
+        public long ID { get; set; } = -1;
         public string Callsign { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
 
@@ -30,8 +30,8 @@ namespace OpenARLog.Data
         public string Mode { get; set; } = string.Empty;
 
         // These two members will hold the Equivalent TIME_ON/QSO_DATE and TIME_OFF/QSO_DATE_OFF
-        public DateTime? DateTimeOn { get; set; } = null;
-        public DateTime? DateTimeOff { get; set; } = null;
+        public DateTime DateTimeOn { get; set; } = new DateTime();
+        public DateTime DateTimeOff { get; set; } = new DateTime();
 
         // Logging station's info.
         public string Operator { get; set; } = string.Empty;
@@ -54,7 +54,7 @@ namespace OpenARLog.Data
 
         public void Clear()
         {
-            ID = 0;
+            ID = -1;
             Callsign = string.Empty;
             Name = string.Empty;
 
@@ -68,8 +68,8 @@ namespace OpenARLog.Data
             Band = string.Empty;
             Mode = string.Empty;
 
-            DateTimeOn = null;
-            DateTimeOff = null;
+            DateTimeOn = new DateTime();
+            DateTimeOff = new DateTime();
 
             Operator = string.Empty;
             My_Name = string.Empty;

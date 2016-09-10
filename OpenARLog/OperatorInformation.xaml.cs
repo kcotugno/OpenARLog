@@ -23,7 +23,7 @@ namespace OpenARLog
         public string Callsign { get { return callsignTxt.Text; } set { callsignTxt.Text = value; } }
         
         // Name here hides the FrameworkElement.Name. Decide to change the property name or supress the warning.
-        public string Name { get { return nameTxt.Text; } set { nameTxt.Text = value; } }
+        new public string Name { get { return nameTxt.Text; } set { nameTxt.Text = value; } }
         public string Country { get { return countryTxt.Text; } set { countryTxt.Text = value; } }
         public string State { get { return stateTxt.Text; } set { stateTxt.Text = value; } }
         public string County { get { return countryTxt.Text; } set { countyTxt.Text = value; } }

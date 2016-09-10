@@ -78,7 +78,7 @@ namespace OpenARLog.Data
             {
                 QSOs.AddLast(new QSO
                 {
-                    ID = row.Field<Int64>((int)Constants.INDEX.ID),
+                    ID = row.Field<long>((int)Constants.INDEX.ID),
                     Callsign = row.Field<string>((int)Constants.INDEX.CALLSIGN),
                     Name = row.IsNull((int)Constants.INDEX.NAME) ? null : row.Field<string>((int)Constants.INDEX.NAME),
                     Country = row.IsNull((int)Constants.INDEX.COUNTRY) ? null : row.Field<string>((int)Constants.INDEX.COUNTRY),
@@ -89,8 +89,8 @@ namespace OpenARLog.Data
                     Frequency = row.IsNull((int)Constants.INDEX.FREQUENCY) ? null : row.Field<string>((int)Constants.INDEX.FREQUENCY),
                     Band = row.IsNull((int)Constants.INDEX.BAND) ? null : row.Field<string>((int)Constants.INDEX.BAND),
                     Mode = row.IsNull((int)Constants.INDEX.MODE) ? null : row.Field<string>((int)Constants.INDEX.MODE),
-                    DateTimeOn = row.IsNull((int)Constants.INDEX.DATETIMEON) ? null : row.Field<DateTime?>((int)Constants.INDEX.DATETIMEON),
-                    DateTimeOff = row.IsNull((int)Constants.INDEX.DATETIMEOFF) ? null : row.Field<DateTime?>((int)Constants.INDEX.DATETIMEOFF),
+                    DateTimeOn = row.IsNull((int)Constants.INDEX.DATETIMEON) ? new DateTime() : row.Field<DateTime>((int)Constants.INDEX.DATETIMEON),
+                    DateTimeOff = row.IsNull((int)Constants.INDEX.DATETIMEOFF) ? new DateTime() : row.Field<DateTime>((int)Constants.INDEX.DATETIMEOFF),
 
                     Operator = row.IsNull((int)Constants.INDEX.OPERATOR) ? null : row.Field<string>((int)Constants.INDEX.OPERATOR),
                     My_Name = row.IsNull((int)Constants.INDEX.MY_NAME) ? null : row.Field<string>((int)Constants.INDEX.MY_NAME),
