@@ -35,13 +35,13 @@ namespace OpenARLog.Data
 
         // Logging station's info.
         public string Operator { get; set; } = string.Empty;
-        public string My_Name { get; set; } = string.Empty;
+        public string MyName { get; set; } = string.Empty;
 
-        public string My_Country { get; set; } = string.Empty;
-        public string My_State { get; set; } = string.Empty;
-        public string My_County { get; set; } = string.Empty;
-        public string My_City { get; set; } = string.Empty;
-        public string My_GridSquare { get; set; } = string.Empty;
+        public string MyCountry { get; set; } = string.Empty;
+        public string MyState { get; set; } = string.Empty;
+        public string MyCounty { get; set; } = string.Empty;
+        public string MyCity { get; set; } = string.Empty;
+        public string MyGridSquare { get; set; } = string.Empty;
 
         public override string ToString()
         {
@@ -72,13 +72,13 @@ namespace OpenARLog.Data
             DateTimeOff = new DateTime();
 
             Operator = string.Empty;
-            My_Name = string.Empty;
+            MyName = string.Empty;
 
-            My_Country = string.Empty;
-            My_State = string.Empty;
-            My_County = string.Empty;
-            My_City = string.Empty;
-            My_GridSquare = string.Empty;
+            MyCountry = string.Empty;
+            MyState = string.Empty;
+            MyCounty = string.Empty;
+            MyCity = string.Empty;
+            MyGridSquare = string.Empty;
         }
     }
 }

@@ -370,27 +370,27 @@ namespace OpenARLog.ADIF
                             break;
 
                         case "MY_NAME":
-                            temp.My_Name = x._data;
+                            temp.MyName = x._data;
                             break;
 
                         case "MY_COUNTRY":
-                            temp.My_Country = x._data;
+                            temp.MyCountry = x._data;
                             break;
 
                         case "My_STATE":
-                            temp.My_State = x._data;
+                            temp.MyState = x._data;
                             break;
 
                         case "MY_CNTY":
-                            temp.My_County = x._data;
+                            temp.MyCounty = x._data;
                             break;
 
                         case "MY_CITY":
-                            temp.My_City = x._data;
+                            temp.MyCity = x._data;
                             break;
 
                         case "MY_GRIDSQUARE":
-                            temp.My_GridSquare = x._data;
+                            temp.MyGridSquare = x._data;
                             break;
 
                         default:

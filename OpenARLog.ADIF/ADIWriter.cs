@@ -203,23 +203,23 @@ namespace OpenARLog.ADIF
             if (!(qso.Operator == string.Empty))
                 _streamer.WriteLine(string.Format("<OPERATOR:{0}>{1}", qso.Operator.Length, qso.Operator));
 
-            if (!(qso.My_Name == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_NAME:{0}>{1}", qso.My_Name.Length, qso.My_Name));
+            if (!(qso.MyName == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_NAME:{0}>{1}", qso.MyName.Length, qso.MyName));
 
-            if (!(qso.My_Country == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_COUNTRY:{0}>{1}", qso.My_Country.Length, qso.My_Country));
+            if (!(qso.MyCountry == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_COUNTRY:{0}>{1}", qso.MyCountry.Length, qso.MyCountry));
 
-            if (!(qso.My_State == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_STATE:{0}>{1}", qso.State.Length, qso.My_State));
+            if (!(qso.MyState == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_STATE:{0}>{1}", qso.State.Length, qso.MyState));
 
-            if (!(qso.My_County == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_CNTY:{0}>{1}", qso.My_County.Length, qso.My_County));
+            if (!(qso.MyCounty == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_CNTY:{0}>{1}", qso.MyCounty.Length, qso.MyCounty));
 
-            if (!(qso.My_City == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_CITY:{0}>{1}", qso.My_City.Length, qso.My_City));
+            if (!(qso.MyCity == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_CITY:{0}>{1}", qso.MyCity.Length, qso.MyCity));
 
-            if (!(qso.My_GridSquare == string.Empty))
-                _streamer.WriteLine(string.Format("<MY_GRIDSQUARE:{0}>{1}", qso.My_GridSquare.Length, qso.My_GridSquare));
+            if (!(qso.MyGridSquare == string.Empty))
+                _streamer.WriteLine(string.Format("<MY_GRIDSQUARE:{0}>{1}", qso.MyGridSquare.Length, qso.MyGridSquare));
 
             // TODO Add the rest of the fields.
 

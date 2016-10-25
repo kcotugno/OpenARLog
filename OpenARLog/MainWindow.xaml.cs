@@ -93,12 +93,12 @@ namespace OpenARLog
         private void LoadOperatorInfo()
         {
             _operator.Operator = Properties.Settings.Default.Operator;
-            _operator.My_Name = Properties.Settings.Default.MyName;
-            _operator.My_Country = Properties.Settings.Default.MyCountry;
-            _operator.My_State = Properties.Settings.Default.MyState;
-            _operator.My_County = Properties.Settings.Default.MyCounty;
-            _operator.My_City = Properties.Settings.Default.MyCity;
-            _operator.My_GridSquare = Properties.Settings.Default.MyGridSquare;
+            _operator.MyName = Properties.Settings.Default.MyName;
+            _operator.MyCountry = Properties.Settings.Default.MyCountry;
+            _operator.MyState = Properties.Settings.Default.MyState;
+            _operator.MyCounty = Properties.Settings.Default.MyCounty;
+            _operator.MyCity = Properties.Settings.Default.MyCity;
+            _operator.MyGridSquare = Properties.Settings.Default.MyGridSquare;
         }
 
         #endregion
@@ -113,12 +113,12 @@ namespace OpenARLog
             Properties.Settings.Default.LogPath = _qsoLog.Path;
 
             Properties.Settings.Default.Operator = _operator.Operator;
-            Properties.Settings.Default.MyName= _operator.My_Name;
-            Properties.Settings.Default.MyCountry= _operator.My_Country;
-            Properties.Settings.Default.MyState = _operator.My_State;
-            Properties.Settings.Default.MyCounty = _operator.My_County;
-            Properties.Settings.Default.MyCity = _operator.My_City;
-            Properties.Settings.Default.MyGridSquare = _operator.My_GridSquare;
+            Properties.Settings.Default.MyName= _operator.MyName;
+            Properties.Settings.Default.MyCountry= _operator.MyCountry;
+            Properties.Settings.Default.MyState = _operator.MyState;
+            Properties.Settings.Default.MyCounty = _operator.MyCounty;
+            Properties.Settings.Default.MyCity = _operator.MyCity;
+            Properties.Settings.Default.MyGridSquare = _operator.MyGridSquare;
 
             Properties.Settings.Default.Save();
         }
@@ -179,27 +179,27 @@ namespace OpenARLog
 
         private void OperatorInformationClick(object sender, RoutedEventArgs e)
         {
-            OperatorInformation info = new OperatorInformation(_operator.Operator, _operator.My_Name, _operator.My_Country, _operator.My_State,
-                                                                _operator.My_County, _operator.My_City, _operator.My_GridSquare);
+            OperatorInformation info = new OperatorInformation(_operator.Operator, _operator.MyName, _operator.MyCountry, _operator.MyState,
+                                                                _operator.MyCounty, _operator.MyCity, _operator.MyGridSquare);
 
 
             if(info.ShowDialog() == true)
             {
                 _operator.Operator= info.Callsign;
-                _operator.My_Name = info.Name;
-                _operator.My_Country = info.Country;
-                _operator.My_State = info.State;
-                _operator.My_County = info.County;
-                _operator.My_City = info.City;
-                _operator.My_GridSquare = info.GridSquare;
+                _operator.MyName = info.Name;
+                _operator.MyCountry = info.Country;
+                _operator.MyState = info.State;
+                _operator.MyCounty = info.County;
+                _operator.MyCity = info.City;
+                _operator.MyGridSquare = info.GridSquare;
 
                 Properties.Settings.Default.Operator = _operator.Operator;
-                Properties.Settings.Default.MyName = _operator.My_Name;
-                Properties.Settings.Default.MyCountry = _operator.My_Country;
-                Properties.Settings.Default.MyState = _operator.My_State;
-                Properties.Settings.Default.MyCounty = _operator.My_County;
-                Properties.Settings.Default.MyCity = _operator.My_City;
-                Properties.Settings.Default.MyGridSquare = _operator.My_GridSquare;
+                Properties.Settings.Default.MyName = _operator.MyName;
+                Properties.Settings.Default.MyCountry = _operator.MyCountry;
+                Properties.Settings.Default.MyState = _operator.MyState;
+                Properties.Settings.Default.MyCounty = _operator.MyCounty;
+                Properties.Settings.Default.MyCity = _operator.MyCity;
+                Properties.Settings.Default.MyGridSquare = _operator.MyGridSquare;
 
                 Properties.Settings.Default.Save();
             }
@@ -267,12 +267,12 @@ namespace OpenARLog
                 DateTimeOff = GetDateTime(timeOffTxt.Text, dateOffTxt.Text),
 
                 Operator = _operator.Operator,
-                My_Name = _operator.My_Name,
-                My_Country = _operator.My_Country,
-                My_State = _operator.My_State,
-                My_County = _operator.My_County,
-                My_City = _operator.My_City,
-                My_GridSquare = _operator.My_GridSquare
+                MyName = _operator.MyName,
+                MyCountry = _operator.MyCountry,
+                MyState = _operator.MyState,
+                MyCounty = _operator.MyCounty,
+                MyCity = _operator.MyCity,
+                MyGridSquare = _operator.MyGridSquare
             };
 
             _qsoLog.InsertQSO(contact);

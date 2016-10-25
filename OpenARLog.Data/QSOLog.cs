@@ -93,12 +93,12 @@ namespace OpenARLog.Data
                     DateTimeOff = row.IsNull((int)Constants.INDEX.DATETIMEOFF) ? new DateTime() : row.Field<DateTime>((int)Constants.INDEX.DATETIMEOFF),
 
                     Operator = row.IsNull((int)Constants.INDEX.OPERATOR) ? null : row.Field<string>((int)Constants.INDEX.OPERATOR),
-                    My_Name = row.IsNull((int)Constants.INDEX.MY_NAME) ? null : row.Field<string>((int)Constants.INDEX.MY_NAME),
-                    My_Country = row.IsNull((int)Constants.INDEX.MY_COUNTRY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTRY),
-                    My_State = row.IsNull((int)Constants.INDEX.MY_STATE) ? null : row.Field<string>((int)Constants.INDEX.MY_STATE),
-                    My_County = row.IsNull((int)Constants.INDEX.MY_COUNTY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTY),
-                    My_City = row.IsNull((int)Constants.INDEX.MY_CITY) ? null : row.Field<string>((int)Constants.INDEX.MY_CITY),
-                    My_GridSquare = row.IsNull((int)Constants.INDEX.MY_GRIDSQUARE) ? null : row.Field<string>((int)Constants.INDEX.MY_GRIDSQUARE)
+                    MyName = row.IsNull((int)Constants.INDEX.MY_NAME) ? null : row.Field<string>((int)Constants.INDEX.MY_NAME),
+                    MyCountry = row.IsNull((int)Constants.INDEX.MY_COUNTRY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTRY),
+                    MyState = row.IsNull((int)Constants.INDEX.MY_STATE) ? null : row.Field<string>((int)Constants.INDEX.MY_STATE),
+                    MyCounty = row.IsNull((int)Constants.INDEX.MY_COUNTY) ? null : row.Field<string>((int)Constants.INDEX.MY_COUNTY),
+                    MyCity = row.IsNull((int)Constants.INDEX.MY_CITY) ? null : row.Field<string>((int)Constants.INDEX.MY_CITY),
+                    MyGridSquare = row.IsNull((int)Constants.INDEX.MY_GRIDSQUARE) ? null : row.Field<string>((int)Constants.INDEX.MY_GRIDSQUARE)
 
                 });
             }
@@ -129,12 +129,12 @@ namespace OpenARLog.Data
                 sqliteCmd.Parameters.AddWithValue("@datetimeon", DateTimeToSQLite(qso.DateTimeOn));
                 sqliteCmd.Parameters.AddWithValue("@datetimeoff", DateTimeToSQLite(qso.DateTimeOff));
                 sqliteCmd.Parameters.AddWithValue("@operator", qso.Operator);
-                sqliteCmd.Parameters.AddWithValue("@myname", qso.My_Name);
-                sqliteCmd.Parameters.AddWithValue("@mycountry", qso.My_Country);
-                sqliteCmd.Parameters.AddWithValue("@mystate", qso.My_State);
-                sqliteCmd.Parameters.AddWithValue("@mycounty", qso.My_County);
-                sqliteCmd.Parameters.AddWithValue("@mycity", qso.My_City);
-                sqliteCmd.Parameters.AddWithValue("@mygridsquare", qso.My_GridSquare);
+                sqliteCmd.Parameters.AddWithValue("@myname", qso.MyName);
+                sqliteCmd.Parameters.AddWithValue("@mycountry", qso.MyCountry);
+                sqliteCmd.Parameters.AddWithValue("@mystate", qso.MyState);
+                sqliteCmd.Parameters.AddWithValue("@mycounty", qso.MyCounty);
+                sqliteCmd.Parameters.AddWithValue("@mycity", qso.MyCity);
+                sqliteCmd.Parameters.AddWithValue("@mygridsquare", qso.MyGridSquare);
 
                 sqliteCmd.ExecuteNonQuery();
 
